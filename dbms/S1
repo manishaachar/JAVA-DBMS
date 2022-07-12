@@ -1,0 +1,544 @@
+(base) mca@mca-System-Product-Name:~$ cd Desktop/
+(base) mca@mca-System-Product-Name:~/Desktop$ mysql -h 192.168.14.71 -u VP21MC001 -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.29-0ubuntu0.20.04.3 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+mysql> 
+[1]+  Stopped                 mysql -h 192.168.14.71 -u VP21MC001 -p
+(base) mca@mca-System-Product-Name:~/Desktop$ mysql -h 192.168.14.71 -u VP21MC021 -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.0.29-0ubuntu0.20.04.3 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table student
+    -> 
+    -> (USN number
+    -> create table student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number
+create table student' at line 3
+mysql> create table student(
+    -> USN Number,
+    -> Sname char(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Number,
+Sname char(30)' at line 2
+mysql> create table student( USN Number(10) primary key, Sname char(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Number(10) primary key, Sname char(30)' at line 1
+mysql> CREATE TABLE STUDENT(
+    -> USN VARCHAR(10) PRIMARY KEY,
+    -> NAME CHAR(30) NOT NULL,
+    -> ADDRESS VARCHAR(30) NOT NULL,
+    -> BRANCHID VARCHAR(10) NOT NULL,
+    -> SEM VARCHAR(20) NOT NULL);
+ERROR 1046 (3D000): No database selected
+mysql> user VP21MC021;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'user VP21MC021' at line 1
+mysql> user VP21MC021_college;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'user VP21MC021_college' at line 1
+mysql> use VP21MC021_college;
+ERROR 1049 (42000): Unknown database 'VP21MC021_college'
+mysql> create database college;
+ERROR 1044 (42000): Access denied for user 'VP21MC021'@'%' to database 'college'
+mysql> use VP21MC021_college;
+ERROR 1049 (42000): Unknown database 'VP21MC021_college'
+mysql> create database VP@!MC021_college;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@!MC021_college' at line 1
+mysql> create database VP21MC021_college;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use VP21MC021_college;
+Database changed
+mysql> CREATE TABLE STUDENT(
+    -> USN VARCHAR(10) PRIMARY KEY,
+    -> NAME CHAR(30) NOT NULL,
+    -> ADDRESS VARCHAR(30) NOT NULL,
+    -> BRANCHID VARCHAR(10) NOT NULL,
+    -> SEM VARCHAR(20) NOT NULL);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc student;
+ERROR 2013 (HY000): Lost connection to MySQL server during query
+No connection. Trying to reconnect...
+Connection id:    12
+Current database: VP21MC021_college
+
+ERROR 1146 (42S02): Table 'VP21MC021_college.student' doesn't exist
+mysql> select *from student;
+ERROR 1146 (42S02): Table 'VP21MC021_college.student' doesn't exist
+mysql> select *from student;
+ERROR 2013 (HY000): Lost connection to MySQL server during query
+No connection. Trying to reconnect...
+Connection id:    9
+Current database: VP21MC021_college
+
+ERROR 1146 (42S02): Table 'VP21MC021_college.student' doesn't exist
+mysql> DESC STUDENT;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| USN      | varchar(10) | NO   | PRI | NULL    |       |
+| NAME     | char(30)    | NO   |     | NULL    |       |
+| ADDRESS  | varchar(30) | NO   |     | NULL    |       |
+| BRANCHID | varchar(10) | NO   |     | NULL    |       |
+| SEM      | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> ALTER TABLE STUDENT BRANCHID INTEGER(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'BRANCHID INTEGER(10)' at line 1
+mysql> ALTER TABLE STUDENT BRANCHID INTEGER;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'BRANCHID INTEGER' at line 1
+mysql> DESC STUDENT;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| USN      | varchar(10) | NO   | PRI | NULL    |       |
+| NAME     | char(30)    | NO   |     | NULL    |       |
+| ADDRESS  | varchar(30) | NO   |     | NULL    |       |
+| BRANCHID | varchar(10) | NO   |     | NULL    |       |
+| SEM      | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENT MODIFY BRANCHID INTEGER;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUDENT;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| USN      | varchar(10) | NO   | PRI | NULL    |       |
+| NAME     | char(30)    | NO   |     | NULL    |       |
+| ADDRESS  | varchar(30) | NO   |     | NULL    |       |
+| BRANCHID | int         | YES  |     | NULL    |       |
+| SEM      | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE BRANCH(
+    -> BRANCHID VARCHAR(10) PRIMARY KEY,
+    -> NAME CHAR(30) NOT NULL,
+    -> HOD VARCHAR(10) NOT NULL);
+ERROR 2013 (HY000): Lost connection to MySQL server during query
+No connection. Trying to reconnect...
+Connection id:    28
+Current database: VP21MC021_college
+
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> DESC BRANCH;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| BRANCHID | varchar(10) | NO   | PRI | NULL    |       |
+| NAME     | char(30)    | NO   |     | NULL    |       |
+| HOD      | varchar(10) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> ALTER TABLE STUDENT MODIFY SEM CHAR(1);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUDENT;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| USN      | varchar(10) | NO   | PRI | NULL    |       |
+| NAME     | char(30)    | NO   |     | NULL    |       |
+| ADDRESS  | varchar(30) | NO   |     | NULL    |       |
+| BRANCHID | int         | YES  |     | NULL    |       |
+| SEM      | char(1)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER COMMIT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COMMIT' at line 1
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> ALTER TABLE STUDENT
+    -> ADD LOC VARCHAR(30); 
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUDENT;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| USN      | varchar(10) | NO   | PRI | NULL    |       |
+| NAME     | char(30)    | NO   |     | NULL    |       |
+| ADDRESS  | varchar(30) | NO   |     | NULL    |       |
+| BRANCHID | int         | YES  |     | NULL    |       |
+| SEM      | char(1)     | YES  |     | NULL    |       |
+| LOC      | varchar(30) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENT DROP COLUMN LOC;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUDENT;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| USN      | varchar(10) | NO   | PRI | NULL    |       |
+| NAME     | char(30)    | NO   |     | NULL    |       |
+| ADDRESS  | varchar(30) | NO   |     | NULL    |       |
+| BRANCHID | int         | YES  |     | NULL    |       |
+| SEM      | char(1)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> ALTER TABLE STUDENT 
+    -> ADD DOB DATE,CONSTRAINT U_NAME NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT U_NAME NOT NULL' at line 2
+mysql> ALTER TABLE STUDENT  
+    -> ADD CONSTRAINT U_NAME UNIQUE NAME;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> ALTER TABLE STUDENT
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DROP TABLE STUDENT;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DESC STUDENT;
+ERROR 1146 (42S02): Table 'VP21MC021_college.STUDENT' doesn't exist
+mysql> DROP TABLE BRANCH;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC BRANCH;
+ERROR 1146 (42S02): Table 'VP21MC021_college.BRANCH' doesn't exist
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DROP DATABASE VP21MC021_college;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create database VP21MC021_college;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use VP21MC021_college;
+Database changed
+mysql> CREATE TABLE STUDENT(
+    -> USN VARCHAR(10) PRIMARY KEY,
+    -> NAME CHAR(30) NOT NULL);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE BRANCH(
+    -> USN VARCHAR(10) PRIMARY KEY,
+    -> BRANCH VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC STUDENT;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| USN   | varchar(10) | NO   | PRI | NULL    |       |
+| NAME  | char(30)    | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> DESC BRANCH;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| USN    | varchar(10) | NO   | PRI | NULL    |       |
+| BRANCH | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (3.05 sec)
+
+mysql> ALTER TABLE BRANCH
+    -> ADD FOREIGN KEY USN REFERENCES STUDENT USN;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REFERENCES STUDENT USN' at line 2
+mysql> ALTER TABLE BRANCH ADD FOREIGN KEY USN REFERENCE STUDENT USN;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REFERENCE STUDENT USN' at line 1
+mysql> ALTER TABLE BRANCH ADD FOREIGN KEY USN REFERENCES STUDENT USN;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REFERENCES STUDENT USN' at line 1
+mysql> ALTER TABLE BRANCH ADD FOREIGN KEY USN REFERENCES STUDENT USN;COMMIT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REFERENCES STUDENT USN' at line 1
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> ALTER TABLE BRANCH CONSTRAINT  
+    ->        FOREIGN KEY USN REFERENCES STUDENT USN;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT  
+       FOREIGN KEY USN REFERENCES STUDENT USN' at line 1
+mysql> ALTER TABLE BRANCH ADD FOREIGN KEY USN REFERENCES STUDENT USN;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REFERENCES STUDENT USN' at line 1
+mysql> ALTER TABLE BRANCH ADD FOREIGN KEY USN REFERENCES TABLE STUDENT USN;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REFERENCES TABLE STUDENT USN' at line 1
+mysql> ALTER TABLE BRANCH
+    ->     ADD FOREIGN KEY (USN) REFERENCES STUDENT (USN);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC BRANCH;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| USN    | varchar(10) | NO   | PRI | NULL    |       |
+| BRANCH | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> DESC STUDENT;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| USN   | varchar(10) | NO   | PRI | NULL    |       |
+| NAME  | char(30)    | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT 
+    VALUES('4VP21MC021',"MANISHA");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> DESC STUDENT;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| USN   | varchar(10) | NO   | PRI | NULL    |       |
+| NAME  | char(30)    | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT;
++------------+---------+
+| USN        | NAME    |
++------------+---------+
+| 4VP21MC021 | MANISHA |
++------------+---------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT 
+   VALUES('4VP21MC022',"MEROLIN");
+INSERT INTO STUDENT 
+   VALUES('4VP21MC023',"VRIDDHI");INSERT INTO STUDENT 
+^C
+mysql>    VALUES('4VP21MC022',"MEROLIN");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('4VP21MC022',"MEROLIN")' at line 1
+mysql> INSERT INTO STUDENT 
+    ->    VALUES('4VP21MC023',"VRIDDHI");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM STUDENT;
++------------+---------+
+| USN        | NAME    |
++------------+---------+
+| 4VP21MC021 | MANISHA |
+| 4VP21MC023 | VRIDDHI |
++------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT     VALUES('4VP21MC022',"MEROLIN");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM STUDENT;
++------------+---------+
+| USN        | NAME    |
++------------+---------+
+| 4VP21MC021 | MANISHA |
+| 4VP21MC022 | MEROLIN |
+| 4VP21MC023 | VRIDDHI |
++------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT 
+    ->    VALUES('4VP21MC022',"MEROLIN");
+ERROR 1062 (23000): Duplicate entry '4VP21MC022' for key 'STUDENT.PRIMARY'
+mysql> INSERT INTO STUDENT 
+    ->    VALUES('4VP21MC024',"KARTHIK");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM STUDENT;
++------------+---------+
+| USN        | NAME    |
++------------+---------+
+| 4VP21MC021 | MANISHA |
+| 4VP21MC022 | MEROLIN |
+| 4VP21MC023 | VRIDDHI |
+| 4VP21MC024 | KARTHIK |
++------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENT DROP USN COLUMN KARTHIK;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COLUMN KARTHIK' at line 1
+mysql> SELECT STUDENT
+    -> ;
+ERROR 1054 (42S22): Unknown column 'STUDENT' in 'field list'
+mysql> SELECT USN
+    -> FROM STUDENT
+    -> WHERE USN='4VP210MC024';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT;
++------------+---------+
+| USN        | NAME    |
++------------+---------+
+| 4VP21MC021 | MANISHA |
+| 4VP21MC022 | MEROLIN |
+| 4VP21MC023 | VRIDDHI |
+| 4VP21MC024 | KARTHIK |
++------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> DELECT FROM STUDENT
+    -> WHERE USN='4VP21MC024';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELECT FROM STUDENT
+WHERE USN='4VP21MC024'' at line 1
+mysql> DELETE FROM STUDENT WHERE USN='4VP21MC021';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM STUDENT;
++------------+---------+
+| USN        | NAME    |
++------------+---------+
+| 4VP21MC022 | MEROLIN |
+| 4VP21MC023 | VRIDDHI |
+| 4VP21MC024 | KARTHIK |
++------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT COLUMN1 FROM STUDENT;
+ERROR 1054 (42S22): Unknown column 'COLUMN1' in 'field list'
+mysql> SELECT DISTINCT(USN) FROM STUDENT;
++------------+
+| USN        |
++------------+
+| 4VP21MC022 |
+| 4VP21MC023 |
+| 4VP21MC024 |
++------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(USN) FROM STUDENT;
++------------+
+| COUNT(USN) |
++------------+
+|          3 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT USN
+    -> FROM STUDENT
+    -> ;
++------------+
+| USN        |
++------------+
+| 4VP21MC022 |
+| 4VP21MC023 |
+| 4VP21MC024 |
++------------+
+3 rows in set (0.00 sec)
+
+mysql> INSER BRANCH VALUES('4VP21MC022',"CS");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSER BRANCH VALUES('4VP21MC022',"CS")' at line 1
+mysql> INSERT INTO BRANCH VALUES('4VP21MC022',"CS");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO BRANCH VALUES('4VP21MC023',"MCA")
+    -> INSERT INTO BRANCH VALUES('4VP21MC024',"EC");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSERT INTO BRANCH VALUES('4VP21MC024',"EC")' at line 2
+mysql> INSERT INTO BRANCH VALUES(('4VP21MC023',"MCA") INSERT INTO BRANCH VALUES('4VP21MC024',"EC"));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSERT INTO BRANCH VALUES('4VP21MC024',"EC"))' at line 1
+mysql> INSERT INTO BRANCH VALUES('4VP21MC023',"MCA");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO BRANCH VALUES('4VP21MC024',"EC");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> DESC BRANCH;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| USN    | varchar(10) | NO   | PRI | NULL    |       |
+| BRANCH | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT * FROM BRANCH;
++------------+--------+
+| USN        | BRANCH |
++------------+--------+
+| 4VP21MC022 | CS     |
+| 4VP21MC023 | MCA    |
+| 4VP21MC024 | EC     |
++------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT BRANCH 
+    -> ;
+ERROR 1054 (42S22): Unknown column 'BRANCH' in 'field list'
+mysql> SELECT * FROM STUDENT;
++------------+---------+
+| USN        | NAME    |
++------------+---------+
+| 4VP21MC022 | MEROLIN |
+| 4VP21MC023 | VRIDDHI |
+| 4VP21MC024 | KARTHIK |
++------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT BRANCH
+    -> ;
+ERROR 1054 (42S22): Unknown column 'BRANCH' in 'field list'
+mysql> SELECT NAME
+    -> FROM STUDENT
+    -> WHERE USN='4VP21MC022';
++---------+
+| NAME    |
++---------+
+| MEROLIN |
++---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT BRANCH
+     FROM BRANCH
+    WHERE USN='4VP21MC022';SELECT BRANCH
+^C
+mysql>      FROM BRANCH
+    ->     WHERE USN='4VP21MC022';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM BRANCH
+    WHERE USN='4VP21MC022'' at line 1
+mysql> SELECT BRANCH
+    ->      FROM BRANCH
+    ->     WHERE USN='4VP21MC022';
++--------+
+| BRANCH |
++--------+
+| CS     |
++--------+
+1 row in set (0.00 sec)
+
+mysql> 
+
+
