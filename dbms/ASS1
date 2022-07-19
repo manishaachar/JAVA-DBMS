@@ -256,11 +256,267 @@ mysql> SELECT * FROM BORROW;
 5 rows in set (0.00 sec)
 
 
-
-SELECT SNAME,BID
-FROM STUDENT,BRANCH
-WHERE STUDENT.BID=(BRACH.BID
-WHERE BID=101);
-
     
-       
+    SELECT * FROM STUDENT
+     WHERE BID IN (SELECT 
+     BID FROM BRANCH 
+     WHERE BNAME='MCA');
+
+mysql> SELECT * FROM STUDENT
+    ->      WHERE BID IN (SELECT 
+    ->      BID FROM BRANCH 
+    ->      WHERE BNAME='MCA');
++------------+---------+---------+-----+-----+
+| USN        | SNAME   | ADDRESS | BID | SEM |
++------------+---------+---------+-----+-----+
+| 4VP21CC034 | MANOJ   | PUTTUR  | 101 | 3   |
+| 4VP21MC001 | KARTHIK | PUTTUR  | 101 | 2   |
+| 4VP21ME011 | KARAN   | PUTTUR  | 101 | 8   |
++------------+---------+---------+-----+-----+
+3 rows in set (0.00 sec)
+
+
+
+
+//19/07/2022
+
+SELECT USN,SNAME
+FROM STUDENT, BRANCH
+WHERE 
+STUDENT.BID=BRANCH.BID AND BNAME='MCA';
+
+
+
+SELECT USN,SNAME
+FROM STUDENT S, BRANCH B
+WHERE 
+S.BID=B.BID AND BNAME='MCA';
+
+mysql> SELECT USN,SNAME
+    -> FROM STUDENT, BRANCH
+    -> WHERE 
+    -> STUDENT.BID=BRANCH.BID AND BNAME='MCA';
++------------+---------+
+| USN        | SNAME   |
++------------+---------+
+| 4VP21CC034 | MANOJ   |
+| 4VP21MC001 | KARTHIK |
+| 4VP21ME011 | KARAN   |
++------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT USN,SNAME
+    -> FROM STUDENT S, BRANCH B
+    -> WHERE 
+    -> S.BID=B.BID AND BNAME='MCA';
++------------+---------+
+| USN        | SNAME   |
++------------+---------+
+| 4VP21CC034 | MANOJ   |
+| 4VP21MC001 | KARTHIK |
+| 4VP21ME011 | KARAN   |
++------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> 
+
+mysql> SELECT ALL BID
+    -> FROM STUDENT;
++-----+
+| BID |
++-----+
+| 101 |
+| 101 |
+| 101 |
+| 201 |
+| 301 |
+| 401 |
+| 501 |
++-----+
+7 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT BID
+    -> FROM STUDENT;
++-----+
+| BID |
++-----+
+| 101 |
+| 201 |
+| 301 |
+| 401 |
+| 501 |
++-----+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM AUTHOR
+    -> WHERE COUNTRY LIKE "%ND%";
++-----+------------+---------+------+
+| AID | ANAME      | COUNTRY | AGE  |
++-----+------------+---------+------+
+| A3  | M.K.SHETTY | INDIA   |   60 |
+| A5  | N.JANAKI   | INDIA   |   70 |
++-----+------------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+
+mysql> SELECT * FROM AUTHOR WHERE COUNTRY LIKE "_ND__";
++-----+------------+---------+------+
+| AID | ANAME      | COUNTRY | AGE  |
++-----+------------+---------+------+
+| A3  | M.K.SHETTY | INDIA   |   60 |
+| A5  | N.JANAKI   | INDIA   |   70 |
++-----+------------+---------+------+
+2 rows in set (0.00 sec)
+
+SELECT AGE 
+FROM AUTHOR
+WHERE AGE  BETWEEN 41 AND 50;
+
+
+mysql> SELECT AGE 
+    -> FROM AUTHOR
+    -> WHERE AGE  BETWEEN 41 AND 50;
++------+
+| AGE  |
++------+
+|   48 |
++------+
+1 row in set (0.00 sec)
+
+
+SELECT * FROM STUDENT
+WHERE SEM='2' AND BNAME='MCA';
+
+
+SELECT USN,SNAME
+    FROM STUDENT S,BRANCH B
+  WHERE S.BID=B.BID AND BNAME='MCA' AND SEM=2;
+  
+  
+  mysql> SELECT USN,SNAME
+    ->     FROM STUDENT S,BRANCH B
+    ->   WHERE S.BID=B.BID AND BNAME='MCA' AND SEM=2;
++------------+---------+
+| USN        | SNAME   |
++------------+---------+
+| 4VP21MC001 | KARTHIK |
+| 4VP21MC050 | AHAN    |
++------------+---------+
+2 rows in set (0.00 sec)
+
+SELECT *
+       FROM STUDENT S,BRANCH B
+  WHERE S.BID=B.BID AND BNAME='MCA' AND SEM=2;
+  
+  mysql> SELECT *
+    ->        FROM STUDENT S,BRANCH B
+    ->   WHERE S.BID=B.BID AND BNAME='MCA' AND SEM=2;
++------------+---------+---------+-----+-----+-----+-------+---------+
+| USN        | SNAME   | ADDRESS | BID | SEM | BID | BNAME | HOD     |
++------------+---------+---------+-----+-----+-----+-------+---------+
+| 4VP21MC001 | KARTHIK | PUTTUR  | 101 | 2   | 101 | MCA   | M.K.RAO |
+| 4VP21MC050 | AHAN    | PUTTUR  | 101 | 2   | 101 | MCA   | M.K.RAO |
++------------+---------+---------+-----+-----+-----+-------+---------+
+
+
+
+SELECT USN,SNAME
+       FROM STUDENT S,BRANCH B
+  WHERE S.BID=B.BID AND BNAME='MCA' ORDER BY NAME;
+  
+  SELECT USN,SNAME
+  FROM STUDENT,BRANCH
+  WHERE BNAME='MCA' AND STUDENT.BID=BRANCH.BID ORDER BY SNAME;
+  
+  SELECT USN,SNAME
+  FROM STUDENT,BRANCH
+  WHERE BNAME='MCA' AND STUDENT.BID=BRANCH.BID ORDER BY DESC SNAME;
+  
+  SELECT USN
+  FROM STUDENT
+   UNION
+   SELECT USN FROM BORROW;
+  
+  
+  SELECT USN FROM STUDENT
+  WHERE SEM IS 2;
+  
+  SELECT * FROM BOOK,STUDENT
+  WHERE BOOK.USN=STUDENT.USN AND BNAME='MCA';
+  
+  
+  SELECT SNAME
+  FROM STUDENT
+  WHERE STUDENT.USN IN(SELECT USN
+  FROM BORROW);
+  
+ SELECT BOOK.AID,ANAME,COUNT(*) 
+    FROM BOOK,AUTHOR
+    WHERE BOOK.AID=AUTHOR.AID
+    GROUP BY BOOK.AID;
+    
+    mysql> SELECT BOOK.AID,ANAME,COUNT(*) 
+    ->     FROM BOOK,AUTHOR
+    ->     WHERE BOOK.AID=AUTHOR.AID
+    ->     GROUP BY BOOK.AID;
++------+------------+----------+
+| AID  | ANAME      | COUNT(*) |
++------+------------+----------+
+| A1   | HARIPRASAD |        1 |
+| A2   | A.K.JOHN   |        2 |
+| A3   | M.K.SHETTY |        2 |
+| A4   | CATHRIN    |        1 |
+| A5   | N.JANAKI   |        1 |
++------+------------+----------+
+5 rows in set (0.00 sec)
+
+
+SELECT STUDENT.USN,SNAME,BNAME,BOOKNAME,ANAME,BORROW_DATE
+FROM STUDENT,BRANCH,BOOK,AUTHOR,BORROW
+WHERE
+ STUDENT.USN=BORROW.USN AND 
+ STUDENT.BID=BRANCH.BID AND
+ BORROW.BOOKID=BOOK.BOOKID AND
+ BOOK.AID=AUTHOR.AID AND
+ SEM=2 AND BNAME='MCA';
+
+
+
+SELECT * FROM STUDENT WHERE USN IN(
+SELECT USN FROM BORROW GROUP BY USN HAVING COUNT(USN)>=2);
+
+mysql> SELECT * FROM STUDENT WHERE USN IN(
+    -> SELECT USN FROM BORROW GROUP BY USN HAVING COUNT(USN)>=2);
++------------+--------+---------+-----+-----+
+| USN        | SNAME  | ADDRESS | BID | SEM |
++------------+--------+---------+-----+-----+
+| 4VP21CC064 | SACHIN | PUTTUR  | 301 | 5   |
++------------+--------+---------+-----+-----+
+1 row in set (0.01 sec)
+
+
+
+SELECT BOOKNAME
+ FROM BOOK
+ ORDER BY BOOKNAME DESC;
+ 
+ mysql> SELECT BOOKNAME
+    ->  FROM BOOK
+    ->  ORDER BY BOOKNAME DESC;
++------------------+
+| BOOKNAME         |
++------------------+
+| SPEED            |
+| SPEED            |
+| DBMS             |
+| DBMS             |
+| DATA STRUCTURE   |
+| COMPUTER NETWOEK |
+| BUSINESS         |
++------------------+
+7 rows in set (0.01 sec)
+

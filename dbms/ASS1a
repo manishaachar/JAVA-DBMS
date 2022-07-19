@@ -1,0 +1,379 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| VP21MC021_COLLEGE  |
+| information_schema |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> use VP21MC021_COLLEGE;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SELECT SNAME
+    ->   FROM STUDENT
+    ->   WHERE STUDENT.USN IN(SELECT USN
+    ->   FROM BORROW);
++---------+
+| SNAME   |
++---------+
+| MANOJ   |
+| SACHIN  |
+| MANISHA |
+| ARUN    |
+| KARAN   |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT COUNT * FROM BOOK
+    -> WHERE AID=(;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM BOOK
+WHERE AID=(' at line 1
+mysql> SELECT * FROM AUTHOR;
++-----+------------+-------------+------+
+| AID | ANAME      | COUNTRY     | AGE  |
++-----+------------+-------------+------+
+| A1  | HARIPRASAD | SOUTH KOREA |   58 |
+| A2  | A.K.JOHN   | CANADA      |   48 |
+| A3  | M.K.SHETTY | INDIA       |   60 |
+| A4  | CATHRIN    | USA         |   59 |
+| A5  | N.JANAKI   | INDIA       |   70 |
++-----+------------+-------------+------+
+5 rows in set (0.00 sec)
+
+mysql> COUNT * FROM BOOK
+    -> WHERE ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COUNT * FROM BOOK
+WHERE' at line 1
+mysql> SELECT * FROM BOOK;
++--------+------------------+------+----------------+------+
+| BOOKID | BOOKNAME         | AID  | PUBLISHER      | BID  |
++--------+------------------+------+----------------+------+
+| BK1    | SPEED            | A2   | M.K PUBLISHER  | 101  |
+| BK2    | DATA STRUCTURE   | A5   | V.P PUBLISHER  | 501  |
+| BK3    | BUSINESS         | A3   | M.M PUBLISHER  | 201  |
+| BK4    | COMPUTER NETWOEK | A1   | ARUN PUBLISHER | 401  |
+| BK5    | SPEED            | A4   | SURI PUBLISHER | 301  |
++--------+------------------+------+----------------+------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM BRANCH;
++-----+-------+----------+
+| BID | BNAME | HOD      |
++-----+-------+----------+
+| 101 | MCA   | M.K.RAO  |
+| 201 | MBA   | KAVERI   |
+| 301 | CIVIL | TARUN    |
+| 401 | CS    | ANU      |
+| 501 | ME    | S.SHETTY |
++-----+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> COUNT * FROM BOOK
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COUNT * FROM BOOK' at line 1
+mysql> INSERT INTO BOOK VALUES('BK5','DBMS','A2','M.K.PUBLISHER',201);
+ERROR 1062 (23000): Duplicate entry 'BK5' for key 'BOOK.PRIMARY'
+mysql> INSERT INTO BOOK VALUES('BK6','DBMS','A2','M.K.PUBLISHER',201);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO BOOK VALUES('BK7','DBMS','A3','M.K.PUBLISHER',101);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM BOOK;
++--------+------------------+------+----------------+------+
+| BOOKID | BOOKNAME         | AID  | PUBLISHER      | BID  |
++--------+------------------+------+----------------+------+
+| BK1    | SPEED            | A2   | M.K PUBLISHER  | 101  |
+| BK2    | DATA STRUCTURE   | A5   | V.P PUBLISHER  | 501  |
+| BK3    | BUSINESS         | A3   | M.M PUBLISHER  | 201  |
+| BK4    | COMPUTER NETWOEK | A1   | ARUN PUBLISHER | 401  |
+| BK5    | SPEED            | A4   | SURI PUBLISHER | 301  |
+| BK6    | DBMS             | A2   | M.K.PUBLISHER  | 201  |
+| BK7    | DBMS             | A3   | M.K.PUBLISHER  | 101  |
++--------+------------------+------+----------------+------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(ANAME)
+    -> FROM AUTHOR
+    -> WHERE AID IN(SELECT AID
+    -> FROM BOOK
+    -> WHERE BOOKNAME='DBMS');
++--------------+
+| COUNT(ANAME) |
++--------------+
+|            2 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM BOOK;
++--------+------------------+------+----------------+------+
+| BOOKID | BOOKNAME         | AID  | PUBLISHER      | BID  |
++--------+------------------+------+----------------+------+
+| BK1    | SPEED            | A2   | M.K PUBLISHER  | 101  |
+| BK2    | DATA STRUCTURE   | A5   | V.P PUBLISHER  | 501  |
+| BK3    | BUSINESS         | A3   | M.M PUBLISHER  | 201  |
+| BK4    | COMPUTER NETWOEK | A1   | ARUN PUBLISHER | 401  |
+| BK5    | SPEED            | A4   | SURI PUBLISHER | 301  |
+| BK6    | DBMS             | A2   | M.K.PUBLISHER  | 201  |
+| BK7    | DBMS             | A3   | M.K.PUBLISHER  | 101  |
++--------+------------------+------+----------------+------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM AUTHOR;
++-----+------------+-------------+------+
+| AID | ANAME      | COUNTRY     | AGE  |
++-----+------------+-------------+------+
+| A1  | HARIPRASAD | SOUTH KOREA |   58 |
+| A2  | A.K.JOHN   | CANADA      |   48 |
+| A3  | M.K.SHETTY | INDIA       |   60 |
+| A4  | CATHRIN    | USA         |   59 |
+| A5  | N.JANAKI   | INDIA       |   70 |
++-----+------------+-------------+------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT BOOK.AID,ANAME 
+    -> FROM BOOK,AUTHOR
+    -> WHERE BOOK.AID=AUTHOR.AID;
++------+------------+
+| AID  | ANAME      |
++------+------------+
+| A1   | HARIPRASAD |
+| A2   | A.K.JOHN   |
+| A2   | A.K.JOHN   |
+| A3   | M.K.SHETTY |
+| A3   | M.K.SHETTY |
+| A4   | CATHRIN    |
+| A5   | N.JANAKI   |
++------+------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT BOOK.AID,ANAME,COUNT * 
+    FROM BOOK,AUTHOR
+    WHERE BOOK.AID=AUTHOR.AID
+    GROUP BY BOOK.AID;SELECT BOOK.AID,ANAME,COUNT * 
+^C
+mysql>     FROM BOOK,AUTHOR
+    ->     WHERE BOOK.AID=AUTHOR.AID
+    ->     GROUP BY BOOK.AID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM BOOK,AUTHOR
+    WHERE BOOK.AID=AUTHOR.AID
+    GROUP BY BOOK.AID' at line 1
+mysql> SELECT BOOK.AID,ANAME,COUNT * 
+    ->     FROM BOOK,AUTHOR
+    ->     WHERE BOOK.AID=AUTHOR.AID
+    ->     GROUP BY BOOK.AID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM BOOK,AUTHOR
+    WHERE BOOK.AID=AUTHOR.AID
+    GROUP BY BOOK.AID' at line 2
+mysql> SELECT BOOK.AID,ANAME,COUNT (*) 
+    ->     FROM BOOK,AUTHOR
+    ->     WHERE BOOK.AID=AUTHOR.AID
+    ->     GROUP BY BOOK.AID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) 
+    FROM BOOK,AUTHOR
+    WHERE BOOK.AID=AUTHOR.AID
+    GROUP BY BOOK.AID' at line 1
+mysql> SELECT BOOK.AID,ANAME,COUNT(*) 
+    ->     FROM BOOK,AUTHOR
+    ->     WHERE BOOK.AID=AUTHOR.AID
+    ->     GROUP BY BOOK.AID;
++------+------------+----------+
+| AID  | ANAME      | COUNT(*) |
++------+------------+----------+
+| A1   | HARIPRASAD |        1 |
+| A2   | A.K.JOHN   |        2 |
+| A3   | M.K.SHETTY |        2 |
+| A4   | CATHRIN    |        1 |
+| A5   | N.JANAKI   |        1 |
++------+------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM BORROW;
++------------+--------+-------------+
+| USN        | BOOKID | BORROW_DATE |
++------------+--------+-------------+
+| 4VP21CC034 | BK2    | 2022-04-12  |
+| 4VP21CC064 | BK1    | 2019-04-22  |
+| 4VP21CC064 | BK2    | 2019-04-22  |
+| 4VP21CS021 | BK3    | 2022-02-11  |
+| 4VP21MB071 | BK4    | 2021-12-22  |
+| 4VP21ME011 | BK5    | 2021-06-30  |
++------------+--------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT STUDENT.USN,STUDENT.SNAME,BRANCH.BNAME,BOOK.BOOKNAME,AUTHOR.ANMAE,BORROWDATE
+    -> FROM STUDENT S,BRANCH B,BOOK BK,AUTHOR A ,BORROW BR
+    -> WHERE
+    ->  S.USN=BR.USN AND 
+    ->  S.BID=BR.BID AND
+    ->  S.BORROR=BK.BORROW AND
+    ->  BK.AID=AUTHOR.AID;
+ERROR 1054 (42S22): Unknown column 'STUDENT.USN' in 'field list'
+mysql> SELECT STUDENT.USN,STUDENT.SNAME,BRANCH.BNAME,BOOK.BOOKNAME,AUTHOR.ANMAE,BORROWDATE
+    -> FROM STUDENT S,BRANCH B,BOOK BK,AUTHOR A ,BORROW BR
+    -> WHERE
+    ->  S.USN=BR.USN AND 
+    ->  S.BID=BR.BID AND
+    ->  S.BORROR=BK.BORROW AND
+    ->  BK.AID=AUTHOR.AID AND
+    ->  S.SEM=2 AND B.BNAME='MCA';
+ERROR 1054 (42S22): Unknown column 'STUDENT.USN' in 'field list'
+mysql> SELECT USN FROM BORROW GROUP BY USN HAVING COUNT(USN)>=2;
++------------+
+| USN        |
++------------+
+| 4VP21CC064 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROMSTUDENT WHERE USN IN(
+SELECT USN FROM BORROW GROUP BY USN HAVING COUNT(USN)>=2);SELECT * FROMSTUDENT WHERE USN IN(
+^C
+mysql> SELECT USN FROM BORROW GROUP BY USN HAVING COUNT(USN)>=2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> SELECT * FROM STUDENT WHERE USN IN(
+    -> SELECT USN FROM BORROW GROUP BY USN HAVING COUNT(USN)>=2);
++------------+--------+---------+-----+-----+
+| USN        | SNAME  | ADDRESS | BID | SEM |
++------------+--------+---------+-----+-----+
+| 4VP21CC064 | SACHIN | PUTTUR  | 301 | 5   |
++------------+--------+---------+-----+-----+
+1 row in set (0.01 sec)
+
+mysql> SELECT S.USN,S.SNAME,B.BNAME,B.BOOKNAME,A.ANMAE,BORROWDATE
+    -> FROM STUDENT S,BRANCH B,BOOK BK,AUTHOR A ,BORROW BR
+    -> WHERE
+    ->  S.USN=BR.USN AND 
+    ->  S.BID=B.BID AND
+    ->  S.BORROR=BK.BORROW AND
+    ->  BK.AID=AUTHOR.AID AND
+    ->  S.SEM=2 AND B.BNAME='MCA';
+ERROR 1054 (42S22): Unknown column 'B.BOOKNAME' in 'field list'
+mysql> SELECT S.USN,S.SNAME,B.BNAME,BK.BOOKNAME,A.ANMAE,BORROWDATE
+    -> FROM STUDENT S,BRANCH B,BOOK BK,AUTHOR A ,BORROW BR
+    -> WHERE
+    ->  S.USN=BR.USN AND 
+    ->  S.BID=B.BID AND
+    ->  S.BORROR=BK.BORROW AND
+    ->  BK.AID=AUTHOR.AID AND
+    ->  S.SEM=2 AND B.BNAME='MCA';
+ERROR 1054 (42S22): Unknown column 'A.ANMAE' in 'field list'
+mysql> SELECT S.USN,S.SNAME,B.BNAME,BK.BOOKNAME,A.ANMAE,BR.BORROWDATE
+    -> FROM STUDENT S,BRANCH B,BOOK BK,AUTHOR A ,BORROW BR
+    -> WHERE
+    ->  S.USN=BR.USN AND 
+    ->  S.BID=B.BID AND
+    ->  S.BORROR=BK.BORROW AND
+    ->  BK.AID=AUTHOR.AID AND
+    ->  S.SEM=2 AND B.BNAME='MCA';
+ERROR 1054 (42S22): Unknown column 'A.ANMAE' in 'field list'
+mysql> SELECT STUDENT.USN,SNAME,BNAME,BOOKNAME,ANMAE,BORROW_DATE
+    -> FROM STUDENT,BRANCH,BOOK,AUTHOR,BORROW
+    -> WHERE
+    ->  STUDENT.USN=BORROW.USN AND 
+    ->  STUDENT.BID=BRANCH.BID AND
+    ->  BORROW.BOOKID=B00K.BOOKID AND
+    ->  BOOK.AID=AUTHOR.AID AND
+    ->  SEM=2 AND B.BNAME='MCA';
+ERROR 1054 (42S22): Unknown column 'ANMAE' in 'field list'
+mysql> SELECT STUDENT.USN,SNAME,BNAME,BOOKNAME,ANAME,BORROW_DATE
+    -> FROM STUDENT,BRANCH,BOOK,AUTHOR,BORROW
+    -> WHERE
+    ->  STUDENT.USN=BORROW.USN AND 
+    ->  STUDENT.BID=BRANCH.BID AND
+    ->  BORROW.BOOKID=B00K.BOOKID AND
+    ->  BOOK.AID=AUTHOR.AID AND
+    ->  SEM=2 AND B.BNAME='MCA';
+ERROR 1054 (42S22): Unknown column 'B00K.BOOKID' in 'where clause'
+mysql> SELECT STUDENT.USN,SNAME,BNAME,BOOKNAME,ANAME,BORROW_DATE
+    -> FROM STUDENT,BRANCH,BOOK,AUTHOR,BORROW
+    -> WHERE
+    ->  STUDENT.USN=BORROW.USN AND 
+    ->  STUDENT.BID=BRANCH.BID AND
+    ->  BORROW.BOOKID=BOOK.BOOKID AND
+    ->  BOOK.AID=AUTHOR.AID AND
+    ->  SEM=2 AND B.BNAME='MCA';
+ERROR 1054 (42S22): Unknown column 'B.BNAME' in 'where clause'
+mysql> SELECT STUDENT.USN,SNAME,BNAME,BOOKNAME,ANAME,BORROW_DATE
+    -> FROM STUDENT,BRANCH,BOOK,AUTHOR,BORROW
+    -> WHERE
+    ->  STUDENT.USN=BORROW.USN AND 
+    ->  STUDENT.BID=BRANCH.BID AND
+    ->  BORROW.BOOKID=BOOK.BOOKID AND
+    ->  BOOK.AID=AUTHOR.AID AND
+    ->  SEM=2 AND BNAME='MCA';
+Empty set (0.00 sec)
+
+mysql> SELECT BOOKNAME
+  FROM BOOK
+ ORDER BY DESC BOOKNAME;SELECT BOOKNAME
+^C
+mysql>   FROM BOOK
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM BOOK' at line 1
+mysql> SELECT BOOKNAME
+    ->   FROM BOOK
+    ->  ORDER BY DESC BOOKNAME;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC BOOKNAME' at line 3
+mysql> SELECT * FROM BOOK;
++--------+------------------+------+----------------+------+
+| BOOKID | BOOKNAME         | AID  | PUBLISHER      | BID  |
++--------+------------------+------+----------------+------+
+| BK1    | SPEED            | A2   | M.K PUBLISHER  | 101  |
+| BK2    | DATA STRUCTURE   | A5   | V.P PUBLISHER  | 501  |
+| BK3    | BUSINESS         | A3   | M.M PUBLISHER  | 201  |
+| BK4    | COMPUTER NETWOEK | A1   | ARUN PUBLISHER | 401  |
+| BK5    | SPEED            | A4   | SURI PUBLISHER | 301  |
+| BK6    | DBMS             | A2   | M.K.PUBLISHER  | 201  |
+| BK7    | DBMS             | A3   | M.K.PUBLISHER  | 101  |
++--------+------------------+------+----------------+------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT  BOOKNAME
+    -> FROM BOOK
+    -> ORDER BY DESC BOOKNAME;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC BOOKNAME' at line 3
+mysql> SELECT BOOKNAME
+    ->  FROM BOOK
+    ->  ORDER BY BOOKNAME DESC;
++------------------+
+| BOOKNAME         |
++------------------+
+| SPEED            |
+| SPEED            |
+| DBMS             |
+| DBMS             |
+| DATA STRUCTURE   |
+| COMPUTER NETWOEK |
+| BUSINESS         |
++------------------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT * FROM STUDENT;
++------------+---------+---------+-----+-----+
+| USN        | SNAME   | ADDRESS | BID | SEM |
++------------+---------+---------+-----+-----+
+| 4VP21CC034 | MANOJ   | PUTTUR  | 101 | 3   |
+| 4VP21CC064 | SACHIN  | PUTTUR  | 301 | 5   |
+| 4VP21CS021 | MANISHA | PUTTUR  | 401 | 2   |
+| 4VP21MB071 | ARUN    | PUTTUR  | 201 | 6   |
+| 4VP21MC001 | KARTHIK | PUTTUR  | 101 | 2   |
+| 4VP21MC050 | AHAN    | PUTTUR  | 101 | 2   |
+| 4VP21MC055 | AKASH   | PUTTUR  | 101 | 1   |
+| 4VP21ME011 | KARAN   | PUTTUR  | 101 | 8   |
+| 4VP21ME034 | HARI    | PUTTUR  | 501 | 4   |
+| 4VP21ME050 | KOMAL   | PUTTUR  | 301 | 2   |
++------------+---------+---------+-----+-----+
+10 rows in set (0.00 sec)
+
+mysql> 
+
