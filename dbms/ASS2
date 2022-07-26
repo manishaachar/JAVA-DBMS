@@ -1,0 +1,336 @@
+mysql> CREATE DATABASE VP21MC021_STUDENT;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE VP21MC021_STUDENT;
+Database changed
+
+CREATE TABLE STUDENT (
+USN VARCHAR(10) PRIMARY KEY,
+NAME CHAR(30),
+DOB DATE,
+BRANCH CHAR(10),
+MARK1 FLOAT(5,2),
+MARK2 FLOAT(5,2),
+MARK3 FLOAT(5,2),
+TOTAL FLOAT(5,2),
+GPA FLOAT(5,2));
+
+
+mysql> CREATE TABLE STUDENT (
+    -> USN VARCHAR(10) PRIMARY KEY,
+    -> NAME CHAR(30),
+    -> DOB DATE,
+    -> BRANCH CHAR(10),
+    -> MARK1 FLOAT(5,2),
+    -> MARK2 FLOAT(5,2),
+    -> MARK3 FLOAT(5,2),
+    -> TOTAL FLOAT(5,2),
+    -> GPA FLOAT(5,2));
+Query OK, 0 rows affected, 5 warnings (0.02 sec)
+
+mysql> DESC STUDENT;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| USN    | varchar(10) | NO   | PRI | NULL    |       |
+| NAME   | char(30)    | YES  |     | NULL    |       |
+| DOB    | date        | YES  |     | NULL    |       |
+| BRANCH | char(10)    | YES  |     | NULL    |       |
+| MARK1  | float(5,2)  | YES  |     | NULL    |       |
+| MARK2  | float(5,2)  | YES  |     | NULL    |       |
+| MARK3  | float(5,2)  | YES  |     | NULL    |       |
+| TOTAL  | float(5,2)  | YES  |     | NULL    |       |
+| GPA    | float(5,2)  | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+9 rows in set (0.01 sec)
+
+
+INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('MCA031','SUMA','2000-04-12','MCA',78,80,90);
+
+
+INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('2031','SUMA','2001-06-12','MBA',75,69,70);
+INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('2045','KUMAR','1999-05-15','MBA',78,80,90);
+
+
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('MCA031','SUMA','2000-04-12','MCA',78,80,90);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('1001','AKASH','1999-05-','MCA',87,80,90);
+ERROR 1292 (22007): Incorrect date value: '1999-05-' for column 'DOB' at row 1
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('1001','AKASH','1999-05-20','MCA',87,80,90);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('1021','MANISHA','2000-10-13','MCA',80,80,80);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('1023','MEROLIN','2000-12-09','MCA',85,85,88);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('1023','MEROLIN','2000-12-09','MCA',85,85,88);    
+
+^C
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('2031','SUMA','2001-06-12','MBA',75,69,70);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('2045','KUMAR','1999-05-15','MBA',78,80,90);
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('3051','KARAN','1999-11-15','CS',65,60,71);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('3051','NITHA','2000-01-01','CS',85,87,79);
+ERROR 1062 (23000): Duplicate entry '3051' for key 'STUDENT.PRIMARY'
+mysql> INSERT INTO STUDENT(USN,NAME,DOB,BRANCH,MARK1,MARK2,MARK3) VALUES('3058','NITHA','2000-01-01','CS',85,87,79);
+Query OK, 1 row affected (0.01 sec)
+
+
+
+mysql> SELECT * FROM STUDENT;
++--------+---------+------------+--------+-------+-------+-------+-------+------+
+| USN    | NAME    | DOB        | BRANCH | MARK1 | MARK2 | MARK3 | TOTAL | GPA  |
++--------+---------+------------+--------+-------+-------+-------+-------+------+
+| 1001   | AKASH   | 1999-05-20 | MCA    | 87.00 | 80.00 | 90.00 |  NULL | NULL |
+| 1021   | MANISHA | 2000-10-13 | MCA    | 80.00 | 80.00 | 80.00 |  NULL | NULL |
+| 1023   | MEROLIN | 2000-12-09 | MCA    | 85.00 | 85.00 | 88.00 |  NULL | NULL |
+| 2031   | SUMA    | 2001-06-12 | MBA    | 75.00 | 69.00 | 70.00 |  NULL | NULL |
+| 2045   | KUMAR   | 1999-05-15 | MBA    | 78.00 | 80.00 | 90.00 |  NULL | NULL |
+| 3051   | KARAN   | 1999-11-15 | CS     | 65.00 | 60.00 | 71.00 |  NULL | NULL |
+| 3058   | NITHA   | 2000-01-01 | CS     | 85.00 | 87.00 | 79.00 |  NULL | NULL |
+| MCA031 | SUMA    | 2000-04-12 | MCA    | 78.00 | 80.00 | 90.00 |  NULL | NULL |
++--------+---------+------------+--------+-------+-------+-------+-------+------+
+8 rows in set (0.00 sec)
+
+
+
+
+1. UPDATE STUDENT SET TOTAL=MARK1+MARK2+MARK3;
+
+mysql> UPDATE STUDENT SET TOTAL=MARK1+MARK2+MARK3;
+Query OK, 8 rows affected (0.01 sec)
+Rows matched: 8  Changed: 8  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++--------+---------+------------+--------+-------+-------+-------+--------+------+
+| USN    | NAME    | DOB        | BRANCH | MARK1 | MARK2 | MARK3 | TOTAL  | GPA  |
++--------+---------+------------+--------+-------+-------+-------+--------+------+
+| 1001   | AKASH   | 1999-05-20 | MCA    | 87.00 | 80.00 | 90.00 | 257.00 | NULL |
+| 1021   | MANISHA | 2000-10-13 | MCA    | 80.00 | 80.00 | 80.00 | 240.00 | NULL |
+| 1023   | MEROLIN | 2000-12-09 | MCA    | 85.00 | 85.00 | 88.00 | 258.00 | NULL |
+| 2031   | SUMA    | 2001-06-12 | MBA    | 75.00 | 69.00 | 70.00 | 214.00 | NULL |
+| 2045   | KUMAR   | 1999-05-15 | MBA    | 78.00 | 80.00 | 90.00 | 248.00 | NULL |
+| 3051   | KARAN   | 1999-11-15 | CS     | 65.00 | 60.00 | 71.00 | 196.00 | NULL |
+| 3058   | NITHA   | 2000-01-01 | CS     | 85.00 | 87.00 | 79.00 | 251.00 | NULL |
+| MCA031 | SUMA    | 2000-04-12 | MCA    | 78.00 | 80.00 | 90.00 | 248.00 | NULL |
++--------+---------+------------+--------+-------+-------+-------+--------+------+
+8 rows in set (0.00 sec)
+
+
+
+2. UPDATE STUDENT SET GPA=TOTAL/3;
+
+
+mysql> SELECT * FROM STUDENT;
++--------+---------+------------+--------+-------+-------+-------+--------+-------+
+| USN    | NAME    | DOB        | BRANCH | MARK1 | MARK2 | MARK3 | TOTAL  | GPA   |
++--------+---------+------------+--------+-------+-------+-------+--------+-------+
+| 1001   | AKASH   | 1999-05-20 | MCA    | 87.00 | 80.00 | 90.00 | 257.00 | 85.67 |
+| 1021   | MANISHA | 2000-10-13 | MCA    | 80.00 | 80.00 | 80.00 | 240.00 | 80.00 |
+| 1023   | MEROLIN | 2000-12-09 | MCA    | 85.00 | 85.00 | 88.00 | 258.00 | 86.00 |
+| 2031   | SUMA    | 2001-06-12 | MBA    | 75.00 | 69.00 | 70.00 | 214.00 | 71.33 |
+| 2045   | KUMAR   | 1999-05-15 | MBA    | 78.00 | 80.00 | 90.00 | 248.00 | 82.67 |
+| 3051   | KARAN   | 1999-11-15 | CS     | 65.00 | 60.00 | 71.00 | 196.00 | 65.33 |
+| 3058   | NITHA   | 2000-01-01 | CS     | 85.00 | 87.00 | 79.00 | 251.00 | 83.67 |
+| MCA031 | SUMA    | 2000-04-12 | MCA    | 78.00 | 80.00 | 90.00 | 248.00 | 82.67 |
++--------+---------+------------+--------+-------+-------+-------+--------+-------+
+8 rows in set (0.00 sec)
+
+
+3. SELECT USN,DOB
+FROM STUDENT
+WHERE DOB BETWEEN '1999-01-01' AND '2005-12-31';
+
+
+mysql> SELECT USN,DOB
+    -> FROM STUDENT
+    -> WHERE DOB BETWEEN '1999-01-01' AND '2005-12-31';
++--------+------------+
+| USN    | DOB        |
++--------+------------+
+| 1001   | 1999-05-20 |
+| 1021   | 2000-10-13 |
+| 1023   | 2000-12-09 |
+| 2031   | 2001-06-12 |
+| 2045   | 1999-05-15 |
+| 3051   | 1999-11-15 |
+| 3058   | 2000-01-01 |
+| MCA031 | 2000-04-12 |
++--------+------------+
+8 rows in set (0.00 sec)
+
+
+
+4. SELECT * 
+FROM STUDENT 
+WHERE BRANCH='MCA';
+
+mysql> SELECT * 
+    -> FROM STUDENT 
+    -> WHERE BRANCH='MCA';
++--------+---------+------------+--------+-------+-------+-------+--------+-------+
+| USN    | NAME    | DOB        | BRANCH | MARK1 | MARK2 | MARK3 | TOTAL  | GPA   |
++--------+---------+------------+--------+-------+-------+-------+--------+-------+
+| 1001   | AKASH   | 1999-05-20 | MCA    | 87.00 | 80.00 | 90.00 | 257.00 | 85.67 |
+| 1021   | MANISHA | 2000-10-13 | MCA    | 80.00 | 80.00 | 80.00 | 240.00 | 80.00 |
+| 1023   | MEROLIN | 2000-12-09 | MCA    | 85.00 | 85.00 | 88.00 | 258.00 | 86.00 |
+| MCA031 | SUMA    | 2000-04-12 | MCA    | 78.00 | 80.00 | 90.00 | 248.00 | 82.67 |
++--------+---------+------------+--------+-------+-------+-------+--------+-------+
+4 rows in set (0.00 sec)
+
+
+5. SELECT MAX(GPA),BRANCH
+FROM STUDENT
+GROUP BY BRANCH;
+
+
+mysql> SELECT MAX(GPA),BRANCH
+    -> FROM STUDENT
+    -> GROUP BY BRANCH;
++----------+--------+
+| MAX(GPA) | BRANCH |
++----------+--------+
+|    86.00 | MCA    |
+|    82.67 | MBA    |
+|    83.67 | CS     |
++----------+--------+
+3 rows in set (0.00 sec)
+
+6. SELECT NAME 
+FROM STUDENT 
+WHERE NAME LIKE "S%"
+
+mysql> SELECT NAME 
+    -> FROM STUDENT 
+    -> WHERE NAME LIKE "S%";
++------+
+| NAME |
++------+
+| SUMA |
+| SUMA |
++------+
+2 rows in set (0.00 sec)
+
+
+7. SELECT NAME 
+FROM STUDENT 
+WHERE NAME LIKE "%AR";
+
+
+mysql> SELECT NAME 
+    -> FROM STUDENT 
+    -> WHERE NAME LIKE "%AR";
++-------+
+| NAME  |
++-------+
+| KUMAR |
++-------+
+1 row in set (0.00 sec)
+
+
+
+8. DELETE FROM STUDENT 
+WHERE USN='1001';
+
+
+mysql> DELETE FROM STUDENT 
+    -> WHERE USN='1001';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM STUDENT;
++--------+---------+------------+--------+-------+-------+-------+--------+-------+
+| USN    | NAME    | DOB        | BRANCH | MARK1 | MARK2 | MARK3 | TOTAL  | GPA   |
++--------+---------+------------+--------+-------+-------+-------+--------+-------+
+| 1021   | MANISHA | 2000-10-13 | MCA    | 80.00 | 80.00 | 80.00 | 240.00 | 80.00 |
+| 1023   | MEROLIN | 2000-12-09 | MCA    | 85.00 | 85.00 | 88.00 | 258.00 | 86.00 |
+| 2031   | SUMA    | 2001-06-12 | MBA    | 75.00 | 69.00 | 70.00 | 214.00 | 71.33 |
+| 2045   | KUMAR   | 1999-05-15 | MBA    | 78.00 | 80.00 | 90.00 | 248.00 | 82.67 |
+| 3051   | KARAN   | 1999-11-15 | CS     | 65.00 | 60.00 | 71.00 | 196.00 | 65.33 |
+| 3058   | NITHA   | 2000-01-01 | CS     | 85.00 | 87.00 | 79.00 | 251.00 | 83.67 |
+| MCA031 | SUMA    | 2000-04-12 | MCA    | 78.00 | 80.00 | 90.00 | 248.00 | 82.67 |
++--------+---------+------------+--------+-------+-------+-------+--------+-------+
+7 rows in set (0.00 sec)
+
+
+SELECT * FROM STUDENT S 
+WHERE EXISTS
+(SELECT BR.USN 
+    FROM BORROW BR, BOOK BK
+   WHERE BR.BOOKID=BK.BOOKID AND BR.USN=S.USN
+  GROUP BY USN
+ HAVING COUNT(DISTINCT AID)>1);
+
+
+==============================================================================================================================
+ASS1
+
+26/07/2022
+
+2.
+mysql> SELECT DISTINCT SNAME FROM STUDENT ,BORROW
+    -> WHERE STUDENT.USN NOT IN (SELECT USN FROM BORROW);
++---------+
+| SNAME   |
++---------+
+| KARTHIK |
+| AHAN    |
+| AKASH   |
+| HARI    |
+| KOMAL   |
++---------+
+5 rows in set (0.00 sec)
+
+
+
+4.
+
+6.
+mysql> SELECT * FROM STUDENT S 
+    -> WHERE EXISTS
+    -> (SELECT BR.USN 
+    ->     FROM BORROW BR, BOOK BK
+    ->    WHERE BR.BOOKID=BK.BOOKID AND BR.USN=S.USN
+    ->   GROUP BY USN
+    ->  HAVING COUNT(DISTINCT AID)>1);
++------------+--------+---------+-----+-----+
+| USN        | SNAME  | ADDRESS | BID | SEM |
++------------+--------+---------+-----+-----+
+| 4VP21CC064 | SACHIN | PUTTUR  | 301 | 5   |
++------------+--------+---------+-----+-----+
+1 row in set (0.01 sec)
+
+
+
+-----------------------------------------------------------------
+SELECT USN FROM BORROW,AUTHOR
+     GROUP BY USN HAVING COUNT
+
+
+SELECT USN 
+FROM BORROW BR, BOOK BK
+WHERE BK.BORROW= BR.BORROW
+;
+
+
+SELECT USN FROM BOOK;
+
+----------------------------------------------------------------------
+
+
+SELECT * FROM STUDENT S 
+     WHERE EXISTS
+   (SELECT USN,PUBLISHER 
+       FROM BORROW ,BOOK 
+        WHERE BORROW.BOOKID=BOOK.BOOKID AND S.USN=BORROW.USN
+   GROUP BY USN
+   HAVING COUNT(DISTINCT PUBLISHER)=1);
+   
