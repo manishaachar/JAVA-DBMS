@@ -1,0 +1,138 @@
+mysql> CREATE DATABASE VP21MC021_CRICKET;
+Query OK, 1 row affected (0.01 sec)
+
+USE VP21MC021_CRICKET;
+Database changed
+
+--------------------------------------------------------------------------------------------
+
+CREATE TABLE TEAM(
+TID VARCHAR(10) PRIMARY KEY,
+TNAME CHAR(30),
+COACH CHAR(30),
+CITY VARCHAR(10));
+
+
+mysql> DESC TEAM;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| TID   | varchar(10) | NO   | PRI | NULL    |       |
+| TNAME | char(30)    | YES  |     | NULL    |       |
+| COACH | char(30)    | YES  |     | NULL    |       |
+| CITY  | varchar(10) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+--------------------------------------------------------------------------------------------
+
+
+CREATE TABLE PLAYER(
+PID VARCHAR(10) PRIMARY KEY,
+PNAME CHAR(30) NOT NULL,
+PHONE_NO INT(10),
+AGE INT(5),
+TID VARCHAR(10),
+FOREIGN KEY(TID)REFERENCES TEAM(TID));
+
+mysql> DESC PLAYER;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PID      | varchar(10) | NO   | PRI | NULL    |       |
+| PNAME    | char(30)    | NO   |     | NULL    |       |
+| PHONE_NO | int         | YES  |     | NULL    |       |
+| AGE      | int         | YES  |     | NULL    |       |
+| TID      | varchar(10) | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------
+
+CREATE TABLE MATCHGAME(
+WINNER_TEAM_ID VARCHAR(10),
+FOREIGN KEY(WINNER_TEAM_ID)REFERENCES TEAM(TID),
+MID VARCHAR(10) PRIMARY KEY,
+TID1 VARCHAR(10),
+FOREIGN KEY(TID1)REFERENCES TEAM(TID),
+TID2 VARCHAR(10),
+FOREIGN KEY(TID1)REFERENCES TEAM(TID),
+SDATE DATE,
+STIME DATETIME);
+
+mysql> DESC MATCHGAME;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| WINNER_TEAM_ID | varchar(10) | YES  | MUL | NULL    |       |
+| MID            | varchar(10) | NO   | PRI | NULL    |       |
+| TID1           | varchar(10) | YES  | MUL | NULL    |       |
+| TID2           | varchar(10) | YES  |     | NULL    |       |
+| SDATE          | date        | YES  |     | NULL    |       |
+| STIME          | datetime    | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+
+-------------------------------------------------------------------------------------------
+CREATE TABLE STADIUM(
+SID VARCHAR(10) PRIMARY KEY,
+SNAME VARCHAR(30),
+CITY VARCHAR(30),
+AR_NAME VARCHAR(20),
+PINCODE INT(6));
+
+MID VARCHAR(10));
+FOREIGN KEY(MID)REFERENCES MATCH(MID));
+
+
+mysql> DESC STADIUM;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| SID     | varchar(10) | NO   | PRI | NULL    |       |
+| SNAME   | varchar(30) | YES  |     | NULL    |       |
+| CITY    | varchar(30) | YES  |     | NULL    |       |
+| AR_NAME | varchar(20) | YES  |     | NULL    |       |
+| PINCODE | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+ 
+------------------------------------------------------------------------------------------------ 
+
+CREATE TABLE MAN_OF_MATCH(
+PID VARCHAR(10),
+MID VARCHAR(10),
+PRIMARY KEY(PLAYER,MATCHGAME));
+
+
+INSERT INTO TEAM VALUES('CSK07','CSK','RAHUL','CHENNAI');
+
+mysql> SELECT * FROM TEAM;
++-------+-------+--------+-----------+
+| TID   | TNAME | COACH  | CITY      |
++-------+-------+--------+-----------+
+| CSK07 | CSK   | RAHUL  | CHENNAI   |
+| KKR21 | KKR   | ANIL   | KOLKATA   |
+| MIN45 | MI    | RAMESH | MUMBAI    |
+| RCB01 | RCB   | PARAM  | BENGALORE |
+| SRH20 | SRH   | MAHESH | HYDREBAD  |
++-------+-------+--------+-----------+
+5 rows in set (0.00 sec)
+
+
+
+
+INSERT INTO PLAYER VALUES('CSK007','DHONI','986472131',40,'CSK07');
+INSERT INTO PLAYER VALUES('KKR004','MANISH','697498463',21,'KKR20');
+INSERT INTO PLAYER VALUES('MIN087','ROHIT','978546635',45,'MIN45');
+INSERT INTO PLAYER VALUES('RCB013','VIRAT','786546541',28,'RCB01');
+INSERT INTO PLAYER VALUES('SRH094','DEEPAK','984656847',25,'SRH20');
+
+
+
+
+
+
+
