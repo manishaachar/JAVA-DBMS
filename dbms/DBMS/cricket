@@ -1,0 +1,267 @@
+mysql> DESC TEAM;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| TID   | varchar(10) | NO   | PRI | NULL    |       |
+| TNAME | char(30)    | YES  |     | NULL    |       |
+| COACH | char(30)    | YES  |     | NULL    |       |
+| CITY  | varchar(10) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESC PLAYER;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PID      | varchar(10) | NO   | PRI | NULL    |       |
+| PNAME    | char(30)    | NO   |     | NULL    |       |
+| PHONE_NO | int         | YES  |     | NULL    |       |
+| AGE      | int         | YES  |     | NULL    |       |
+| TID      | varchar(10) | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table Match1(
+    ->  MID int(10) primary key,
+    ->  dtime DATETIME not null,
+    ->  TID1 int(10) not null,
+    ->  TID2 int(10) not null,
+    ->  stadid int(10) not null,
+    ->  foreign key(stadid) references stadium(stadid));
+Query OK, 0 rows affected, 4 warnings (0.02 sec)
+
+mysql> DESC Match1;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| MID    | int      | NO   | PRI | NULL    |       |
+| dtime  | datetime | NO   |     | NULL    |       |
+| TID1   | int      | NO   |     | NULL    |       |
+| TID2   | int      | NO   |     | NULL    |       |
+| stadid | int      | NO   | MUL | NULL    |       |
++--------+----------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> 
+
+mysql> DESC stadium:
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+mysql> DESC stadium;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| stadid   | int         | NO   | PRI | NULL    |       |
+| stadname | varchar(30) | NO   |     | NULL    |       |
+| city     | varchar(20) | NO   |     | NULL    |       |
+| area     | varchar(20) | NO   |     | NULL    |       |
+| pincode  | int         | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> DESC man_of_match;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| PID   | int  | NO   | PRI | NULL    |       |
+| MID   | int  | NO   | PRI | NULL    |       |
++-------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> 
+
+
+
+mysql> insert into stadium values(403,'maharani','m.t.puram','mysore',573303);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from stadium;
++--------+----------+-----------+-----------+---------+
+| stadid | stadname | city      | area      | pincode |
++--------+----------+-----------+-----------+---------+
+|    301 | tenkila  | puttur    | nagara    |   57201 |
+|    302 | darbe    | puttur    | darbe     |   57201 |
+|    401 | mysore   | k.r.puram | mysore    |  573303 |
+|    402 | maharaja | m.t.puram | mangalore |  572540 |
+|    403 | maharani | m.t.puram | mysore    |  573303 |
++--------+----------+-----------+-----------+---------+
+5 rows in set (0.00 sec)
+
+=================================================================================================================================
+
+mysql> select * from TEAM;
++-------+-------+--------+-----------+
+| TID   | TNAME | COACH  | CITY      |
++-------+-------+--------+-----------+
+| CSK07 | CSK   | RAHUL  | CHENNAI   |
+| KKR21 | KKR   | ANIL   | KOLKATA   |
+| MIN45 | MI    | RAMESH | MUMBAI    |
+| RCB01 | RCB   | PARAM  | BENGALORE |
+| SRH20 | SRH   | MAHESH | HYDREBAD  |
++-------+-------+--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from PLAYER;
++--------+--------+-----------+------+-------+
+| PID    | PNAME  | PHONE_NO  | AGE  | TID   |
++--------+--------+-----------+------+-------+
+| CSK007 | DHONI  | 986472131 |   40 | CSK07 |
+| MIN087 | ROHIT  | 978546635 |   45 | MIN45 |
+| RCB013 | VIRAT  | 786546541 |   28 | RCB01 |
+| SRK094 | DEEPAK | 984656847 |   25 | SRH20 |
++--------+--------+-----------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Match1;
+Empty set (0.00 sec)
+
+mysql> select * from stadium;
++--------+----------+-----------+-----------+---------+
+| stadid | stadname | city      | area      | pincode |
++--------+----------+-----------+-----------+---------+
+|    301 | tenkila  | puttur    | nagara    |   57201 |
+|    302 | darbe    | puttur    | darbe     |   57201 |
+|    401 | mysore   | k.r.puram | mysore    |  573303 |
+|    402 | maharaja | m.t.puram | mangalore |  572540 |
+|    403 | maharani | m.t.puram | mysore    |  573303 |
++--------+----------+-----------+-----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> 
+
+select * from stadium where stadid=(
+select stadid from Match1 GROUP BY stadid order by
+    COUNT(stadid)DESC LIMIT 1);
+
+
+
+mysql> insert into Match1 values(120,'2021-09-08 09-20-20',007,001,301);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into Match1 values(130,'2021-09-08 09-20-20',008,002,302);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into Match1 values(140,'2021-09-08 09-20-20',009,003,401);
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> insert into Match1 values(150,'2021-09-08 09-20-20',010,009,402);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into Match1 values(110,'2021-09-08 09-20-20',007,004,403);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from Match1;
++-----+---------------------+------+------+--------+
+| MID | dtime               | TID1 | TID2 | stadid |
++-----+---------------------+------+------+--------+
+| 110 | 2021-09-08 09:20:20 |    7 |    4 |    403 |
+| 120 | 2021-09-08 09:20:20 |    7 |    1 |    301 |
+| 130 | 2021-09-08 09:20:20 |    8 |    2 |    302 |
+| 140 | 2021-09-08 09:20:20 |    9 |    3 |    401 |
+| 150 | 2021-09-08 09:20:20 |   10 |    9 |    402 |
++-----+---------------------+------+------+--------+
+5 rows in set (0.00 sec)
+
+insert into man_of_match values('CSK007',120);
+insert into man_of_match values('MIN087',110);
+insert into man_of_match values('RCB013 ',130);
+insert into man_of_match values('CSK007',140);
+insert into man_of_match values('SRK094',150);
+
+
+mysql> create table man_of_match
+    ->  (PID varchar(10) not null,
+    ->  MID int(10) not null,
+    ->  primary key(PID,MID));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> insert into man_of_match values('CSK007',120);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into man_of_match values('MIN087',110);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into man_of_match values('RCB013 ',130);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into man_of_match values('CSK007',140);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into man_of_match values('SRK094',150);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from man_of_match;
++---------+-----+
+| PID     | MID |
++---------+-----+
+| CSK007  | 120 |
+| CSK007  | 140 |
+| MIN087  | 110 |
+| RCB013  | 130 |
+| SRK094  | 150 |
++---------+-----+
+5 rows in set (0.00 sec)
+
+==============================================================================================
+1)
+
+select PNAME, TNAME, AGE from PLAYER P,TEAM T where
+P.TID=T.TID and AGE= (select min(AGE) from PLAYER);    
+
+mysql> select PNAME, TNAME, AGE from PLAYER P,TEAM T where
+    -> P.TID=T.TID and AGE= (select min(AGE) from PLAYER);   
++--------+-------+------+
+| PNAME  | TNAME | AGE  |
++--------+-------+------+
+| DEEPAK | SRH   |   25 |
++--------+-------+------+
+1 row in set (0.00 sec)
+
+================================================================================================
+2)
+
+ mysql> select * from stadium where stadid=(
+    -> select stadid from Match1 GROUP BY stadid order by
+    ->     COUNT(stadid)DESC LIMIT 1);
++--------+----------+--------+--------+---------+
+| stadid | stadname | city   | area   | pincode |
++--------+----------+--------+--------+---------+
+|    301 | tenkila  | puttur | nagara |   57201 |
++--------+----------+--------+--------+---------+
+1 row in set (0.00 sec)
+
+=================================================================================================
+3)
+
+
+SELECT SID,COUNT(MID) FROM MATCHS GROUP BY SID ORDER BY COUNT(MID) DESC;
+
+
+============================================================================
+
+4
+
+SELECT * FROM TEAM where TID=(select winner_id from Match1 group by winner_id order by 
+count(Match1.winner_id) DESC LIMIT 1);
+
+
+select TNAME from TEAM where TID in(
+select winner_id from Match1 group by(winner_id,stadid)
+having count(*) in (select count(winner_id)
+from Match1 group by winner_id));
+
+ 
+==================================================================================
+3)
+select * from TEAM 
+where TID=(select winner_id from Match1 group by winner_id having count(stadid)>=2);
+
+
+mysql> select * from TEAM 
+    -> where TID=(select winner_id from Match1 group by winner_id having count(stadid)>=2);
++-------+-------+-------+---------+-----+
+| TID   | TNAME | COACH | CITY    | CID |
++-------+-------+-------+---------+-----+
+| CSK07 | CSK   | RAHUL | CHENNAI |  21 |
++-------+-------+-------+---------+-----+
+1 row in set (0.00 sec)
