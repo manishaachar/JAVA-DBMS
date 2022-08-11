@@ -1,114 +1,217 @@
-mysql> CREATE DATABASE VP21MC021_CRICKET;
-Query OK, 1 row affected (0.01 sec)
+create table team
+(teamid int(10) primary key,
+teamname varchar(30) not null,
+city varchar(30) not null,
+coach varchar(30) not null,
 
-USE VP21MC021_CRICKET;
-Database changed
+captain_id int(10) not null);
 
---------------------------------------------------------------------------------------------
+alter table TEAM
+add foreign key(CID)
+references PLAYER(PID) constraints="varchar(10)";
 
-CREATE TABLE TEAM(
-TID VARCHAR(10) PRIMARY KEY,
-TNAME CHAR(30),
-COACH CHAR(30),
-CITY VARCHAR(10));
-
-
-mysql> DESC TEAM;
-+-------+-------------+------+-----+---------+-------+
-| Field | Type        | Null | Key | Default | Extra |
-+-------+-------------+------+-----+---------+-------+
-| TID   | varchar(10) | NO   | PRI | NULL    |       |
-| TNAME | char(30)    | YES  |     | NULL    |       |
-| COACH | char(30)    | YES  |     | NULL    |       |
-| CITY  | varchar(10) | YES  |     | NULL    |       |
-+-------+-------------+------+-----+---------+-------+
-4 rows in set (0.01 sec)
-
---------------------------------------------------------------------------------------------
+insert into team(teamid,teamname,city,coach) values (101,'vtu','belgavi','dhanya');
+insert into team(teamid,teamname,city,coach) values (102,'vct','puttur','dhanya');
+insert into team(teamid,teamname,city,coach) values (103,'philo','puttur','dhanya');
+insert into team(teamid,teamname,city,coach) values (104,'vtu','belgavi','kavya');
+insert into team(teamid,teamname,city,coach) values (105,'philo1','puttur','mero');
 
 
-CREATE TABLE PLAYER(
-PID VARCHAR(10) PRIMARY KEY,
-PNAME CHAR(30) NOT NULL,
-PHONE_NO INT(10),
-AGE INT(5),
-TID VARCHAR(10),
-FOREIGN KEY(TID)REFERENCES TEAM(TID));
 
-mysql> DESC PLAYER;
+
+create table player
+(playerid int(10) primary key,
+playername varchar(30) not null,
+phone int(10) not null,
+age int(5) not null,
+teamid int(10) not null,
+ foreign key(teamid) references team(teamid));
+ 
+ insert into player(playerid,playername,phone,age,teamid) values(01,'geeta',1234587890,21,101);
+  insert into player(playerid,playername,phone,age,teamid) values(02,'mani',1234567800,22,102);
+ 
+  insert into player(playerid,playername,phone,age,teamid) values(03,'deepti',1234566890,20,102);
+ 
+  insert into player(playerid,playername,phone,age,teamid) values(04,'navya',1234567490,24,103);
+ 
+  insert into player(playerid,playername,phone,age,teamid) values(05,'kia',1234567290,21,104);
+ 
+ 
+ create table match1(
+ matchid int(10) primary key,
+ dtime DATETIME not null,
+ teamid1 int(10) not null,
+ teamid2 int(10) not null,
+ stadid int(10) not null,
+ winner_id int(10) not null,
+ foreign key(teamid1) references team(teamid),
+ foreign key(teamid2) references team(teamid),
+ foreign key(stadid) references stadium(stadid),
+ foreign key(winner_id) references team(teamid));
+ 
+ 
+  insert into Match1 values(201,'2021-09-08 09-20-20',101,102,301,101);
+  
+  insert into match1 values(202,'2021-09-08 09-20-20',101,103,301,101);
+  
+  insert into match1 values(203,'2021-09-08 09-20-20',102,103,301,101);
+  
+  insert into match1 values(204,'2021-09-08 09-20-20',101,102,301,101);
+  
+  insert into match1 values(205,'2021-09-08 09-20-20',101,102,301,101);
+  
+ 
+ create table stadium(
+ stadid int(10) primary key,
+ stadname varchar(30) not null,
+ city varchar(20) not null,
+ area varchar(20) not null,
+ pincode int(5) not null);
+ 
+  insert into stadium values(301,'tenkila','puttur','nagara',57201);
+    insert into stadium values(302,'darbe','puttur','darbe',57201);
+      insert into stadium values(303,'kantivara','bangalore','rajajinagara',57201);
+        
+ 
+ insert into stadium values(401,'mysore','k.r.puram','mysore',573303);
+ 
+ insert into stadium values(402,'maharaja','m.t.puram','mangalore',572540);
+ 
+ create table man_of_match
+ (playerid int(10) not null,
+ matchid int(10) not null,
+ primary key(playerid,matchid));
+ 
+ insert into man_of_match values(02,201);
+ insert into man_of_match values(
+ 
+ 
+alter table man_of_match
+add foreign key(playerid )
+references player(playerid);
+
+
+ 
+ 
+ output;
+ Database changed
+mysql> desc team
+    -> ;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| teamid     | int         | NO   | PRI | NULL    |       |
+| teamname   | varchar(30) | NO   |     | NULL    |       |
+| city       | varchar(30) | NO   |     | NULL    |       |
+| coach      | varchar(30) | NO   |     | NULL    |       |
+| captain_id | int         | NO   | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc player;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| playerid   | int         | NO   | PRI | NULL    |       |
+| playername | varchar(30) | NO   |     | NULL    |       |
+| phone      | int         | NO   |     | NULL    |       |
+| age        | int         | NO   |     | NULL    |       |
+| teamid     | int         | NO   | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc match1;
++-----------+----------+------+-----+---------+-------+
+| Field     | Type     | Null | Key | Default | Extra |
++-----------+----------+------+-----+---------+-------+
+| matchid   | int      | NO   | PRI | NULL    |       |
+| dtime     | datetime | NO   |     | NULL    |       |
+| teamid1   | int      | NO   | MUL | NULL    |       |
+| teamid2   | int      | NO   | MUL | NULL    |       |
+| stadid    | int      | NO   | MUL | NULL    |       |
+| winner_id | int      | NO   | MUL | NULL    |       |
++-----------+----------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> desc stadium;
 +----------+-------------+------+-----+---------+-------+
 | Field    | Type        | Null | Key | Default | Extra |
 +----------+-------------+------+-----+---------+-------+
-| PID      | varchar(10) | NO   | PRI | NULL    |       |
-| PNAME    | char(30)    | NO   |     | NULL    |       |
-| PHONE_NO | int         | YES  |     | NULL    |       |
-| AGE      | int         | YES  |     | NULL    |       |
-| TID      | varchar(10) | YES  | MUL | NULL    |       |
+| stadid   | int         | NO   | PRI | NULL    |       |
+| stadname | varchar(30) | NO   |     | NULL    |       |
+| city     | varchar(20) | NO   |     | NULL    |       |
+| area     | varchar(20) | NO   |     | NULL    |       |
+| pincode  | int         | NO   |     | NULL    |       |
 +----------+-------------+------+-----+---------+-------+
-5 rows in set (0.00 sec)
+5 rows in set (0.01 sec)
 
----------------------------------------------------------------------------------------------
-
-CREATE TABLE MATCHGAME(
-WINNER_TEAM_ID VARCHAR(10),
-FOREIGN KEY(WINNER_TEAM_ID)REFERENCES TEAM(TID),
-MID VARCHAR(10) PRIMARY KEY,
-TID1 VARCHAR(10),
-FOREIGN KEY(TID1)REFERENCES TEAM(TID),
-TID2 VARCHAR(10),
-FOREIGN KEY(TID1)REFERENCES TEAM(TID),
-SDATE DATE,
-STIME DATETIME);
-
-mysql> DESC MATCHGAME;
-+----------------+-------------+------+-----+---------+-------+
-| Field          | Type        | Null | Key | Default | Extra |
-+----------------+-------------+------+-----+---------+-------+
-| WINNER_TEAM_ID | varchar(10) | YES  | MUL | NULL    |       |
-| MID            | varchar(10) | NO   | PRI | NULL    |       |
-| TID1           | varchar(10) | YES  | MUL | NULL    |       |
-| TID2           | varchar(10) | YES  |     | NULL    |       |
-| SDATE          | date        | YES  |     | NULL    |       |
-| STIME          | datetime    | YES  |     | NULL    |       |
-+----------------+-------------+------+-----+---------+-------+
-6 rows in set (0.00 sec)
+mysql> desc man_of_match;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| playerid | int  | NO   | PRI | NULL    |       |
+| matchid  | int  | NO   | PRI | NULL    |       |
++----------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
 
 
--------------------------------------------------------------------------------------------
-CREATE TABLE STADIUM(
-SID VARCHAR(10) PRIMARY KEY,
-SNAME VARCHAR(30),
-CITY VARCHAR(30),
-AR_NAME VARCHAR(20),
-PINCODE INT(6));
+mysql> alter table man_of_match
+    -> add foreign key(playerid )
+    -> references player(playerid);
+ alter table man_of_match
+add foreign key(matchid)
+references match1(matchid);
+    
+    
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
-MID VARCHAR(10));
-FOREIGN KEY(MID)REFERENCES MATCH(MID));
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc man_of_match;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| playerid | int  | NO   | PRI | NULL    |       |
+| matchid  | int  | NO   | PRI | NULL    |       |
++----------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
 
 
-mysql> DESC STADIUM;
-+---------+-------------+------+-----+---------+-------+
-| Field   | Type        | Null | Key | Default | Extra |
-+---------+-------------+------+-----+---------+-------+
-| SID     | varchar(10) | NO   | PRI | NULL    |       |
-| SNAME   | varchar(30) | YES  |     | NULL    |       |
-| CITY    | varchar(30) | YES  |     | NULL    |       |
-| AR_NAME | varchar(20) | YES  |     | NULL    |       |
-| PINCODE | int         | YES  |     | NULL    |       |
-+---------+-------------+------+-----+---------+-------+
-5 rows in set (0.00 sec)
+
+select teamname from team
+where teamid in(select teamid 
+from player 
+group by(teamid) 
+order by min(age));
+
+select p.playerid,
+p.playername,min(age)
+     from player p,team t
+      where t.teamid=p.teamid
+       group by t.teamid;
+     
+--------------------------------------------------------------------------------------------------------------------------------
+
+11/08/2022
+
+1)
+select pname, tname, age from player p,team t where
+p.tid=t.tid and age= (select min(age) from player);    
+
+============================================================
+
+SELECT M.SID, COUNT(M.MID)
+FROM MATCHE1 M GROUP BY M.SID ORDER BY COUNT(M.MID)DESC;
+
+============================================================
+
+SELECT SID,COUNT(MID) FROM MATCHS GROUP BY SID ORDER BY COUNT(MID) DESC;
 
  
------------------------------------------------------------------------------------------------- 
 
-CREATE TABLE MAN_OF_MATCH(
-PID VARCHAR(10),
-MID VARCHAR(10),
-PRIMARY KEY(PLAYER,MATCHGAME));
-
-
-INSERT INTO TEAM VALUES('CSK07','CSK','RAHUL','CHENNAI');
-
+-----------------------------------------------------------
 mysql> SELECT * FROM TEAM;
 +-------+-------+--------+-----------+
 | TID   | TNAME | COACH  | CITY      |
@@ -119,20 +222,133 @@ mysql> SELECT * FROM TEAM;
 | RCB01 | RCB   | PARAM  | BENGALORE |
 | SRH20 | SRH   | MAHESH | HYDREBAD  |
 +-------+-------+--------+-----------+
+--------------------------------------------------------------
+
+
+create table Match1(
+ MID int(10) primary key,
+ dtime DATETIME not null,
+ TID1 int(10) not null,
+ TID2 int(10) not null,
+ stadid int(10) not null,
+ foreign key(stadid) references stadium(stadid));
+ 
+ 
+Winner_id int(10) not null,
+foreign key(TID1) references TEAM(TID1),
+foreign key(TID2) references TEAM(TID2),
+foreign key(Winner_id) references TEAM(TID));
+
+
+
+create table man_of_match
+ (PID varchar(10) not null,
+ MID int(10) not null,
+ primary key(PID,MID));
+ 
+ 
+----------------------------------------------------------------------
+create table stadium(
+    ->  stadid int(10) primary key,
+    ->  stadname varchar(30) not null,
+    ->  city varchar(20) not null,
+    ->  area varchar(20) not null,
+    ->  pincode int(5) not null);
+
+
+
+create table Match1(
+    ->  MID int(10) primary key,
+    ->  dtime DATETIME not null,
+    ->  TID1 int(10) not null,
+    ->  TID2 int(10) not null,
+    ->  stadid int(10) not null,
+    ->  Winner_id int(10) not null,
+    ->  foreign key(stadid) references stadium(stadid));
+Query OK, 0 rows affected, 5 warnings (0.03 sec)
+
+---------------------------------------------------------------------------------------------------
+
+
+
+
+mysql> desc Match1;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| MID    | int      | NO   | PRI | NULL    |       |
+| dtime  | datetime | NO   |     | NULL    |       |
+| TID1   | int      | NO   |     | NULL    |       |
+| TID2   | int      | NO   |     | NULL    |       |
+| stadid | int      | NO   | MUL | NULL    |       |
++--------+----------+------+-----+---------+-------+
 5 rows in set (0.00 sec)
 
+insert into Match1 values(120,'2021-09-08 09-20-20',007,001,301);
+
+insert into Match1 values(130,'2021-09-08 09-20-20',008,002,302);
+
+insert into Match1 values(140,'2021-09-08 09-20-20',009,003,401);
+
+insert into Match1 values(150,'2021-09-08 09-20-20',010,009,402);
+insert into Match1 values(110,'2021-09-08 09-20-20',007,004,403);
+
+
+alter table TEAM add
+CID int(10) not null;
+
+alter table TEAM 
+add foreign key(CID)
+references PLAYER(PID);
+
+alter table team
+add foreign key(captain_id)
+references player(playerid);
+
+alter table TEAM add constraints CID varchar(10);
+
+================================================================================================
+
+create table Match1(
+    ->  MID int(10) primary key,
+    ->  dtime DATETIME not null,
+    ->  TID1 int(10) not null,
+    ->  TID2 int(10) not null,
+    ->  stadid int(10) not null,
+    ->  foreign key(stadid) references stadium(stadid));
+Query OK, 0 rows affected, 4 warnings (0.02 sec)
+
+
+ create table match1(
+ matchid int(10) primary key,
+ dtime DATETIME not null,
+ teamid1 int(10) not null,
+ teamid2 int(10) not null,
+ stadid int(10) not null,
+ winner_id int(10) not null,
+ foreign key(teamid1) references team(teamid),
+ foreign key(teamid2) references team(teamid),
+ foreign key(stadid) references stadium(stadid),
+ foreign key(winner_id) references team(teamid));
+ 
+ 
+ alter table TEAM
+add foreign key(CID)
+references PLAYER(PID) constraints="varchar(10)";
 
 
 
-INSERT INTO PLAYER VALUES('CSK007','DHONI','986472131',40,'CSK07');
-INSERT INTO PLAYER VALUES('KKR004','MANISH','697498463',21,'KKR20');
-INSERT INTO PLAYER VALUES('MIN087','ROHIT','978546635',45,'MIN45');
-INSERT INTO PLAYER VALUES('RCB013','VIRAT','786546541',28,'RCB01');
-INSERT INTO PLAYER VALUES('SRH094','DEEPAK','984656847',25,'SRH20');
+alter table Match1 add
+winner_ID varchar(10) not null;
 
 
 
-
-
-
-
+alter table Match1 add
+ foreign key(TID1) references TEAM(TID1),
+ foreign key(TID2) references TEAM(TID2),
+ foreign key(winner_id) references TEAM(TID);
+ 
+ insert into Match1 values(120,'2021-09-08 09-20-20',007,001,301);
+ 
+ 
+ update Match1 set winner_id='CSK07' where MID=110;
