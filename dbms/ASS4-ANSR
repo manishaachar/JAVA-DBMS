@@ -310,9 +310,105 @@ mysql> SELECT * FROM TOURIST WHERE TID IN(SELECT TID FROM VISITS,
 -------------------------------------------------------------------------------------------------
 5 
 
+UPDATE VISITS
+SET TID='22'
+   WHERE TPID='111';
+
 
 SELECT * FROM TOURIST_PLACE WHERE TPID IN(
 SELECT TPID FROM VISITS,TOURIST WHERE VISITS.TID=TOURIST.TID GROUP BY TPID
 HAVING COUNT(DISTINCT COUNTRY)=(SELECT COUNT(DISTINCT COUNTRY) FROM TOURIST));
+
+
+mysql> SELECT * FROM TOURIST_PLACE WHERE TPID IN(
+    -> SELECT TPID FROM VISITS,TOURIST WHERE VISITS.TID=TOURIST.TID GROUP BY TPID
+    -> HAVING COUNT(DISTINCT COUNTRY)=(SELECT COUNT(DISTINCT COUNTRY) FROM TOURIST));
++------+---------+-----------+-----------+--------+
+| TPID | HISTORY | KILOMETER | STATE     | TPNAME |
++------+---------+-----------+-----------+--------+
+|  222 | BEAUTY  |       200 | KARNATAKA | MYSORE |
++------+---------+-----------+-----------+--------+
+1 row in set (0.00 sec)
+
+
+
+----------------------------------------------------------------------------------------------------
+
+UPDATE VISITS
+   SET TID='22'
+   WHERE TPID='111';
+
+
+mysql> SELECT * FROM VISITS;
++------+-----+------------+
+| TPID | TID | VDATE      |
++------+-----+------------+
+|  111 |  22 | 2014-09-13 |
+|  221 |  33 | 2020-10-24 |
+|  222 |  22 | 2020-10-24 |
+|  222 |  33 | 2020-10-24 |
+|  333 |  33 | 2019-06-23 |
+|  444 |  58 | 2021-01-04 |
+|  555 |  13 | 2017-11-22 |
++------+-----+------------+
+7 rows in set (0.00 sec)
+
+
+UPDATE VISITS
+SET TPID='555'
+WHERE TID='22';
+
+
+INSERT INTO VISITS VALUES(222,1,'2021-10-24');
+INSERT INTO VISITS VALUES(222,58,'2018-10-24');
+INSERT INTO VISITS VALUES(222,13,'2019-10-24');
+
+---------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+mysql> INSERT INTO VISITS VALUES(222,58,'2018-10-24');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO VISITS VALUES(222,13,'2019-10-24');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM VISITS;
++------+-----+------------+
+| TPID | TID | VDATE      |
++------+-----+------------+
+|  111 |  22 | 2014-09-13 |
+|  221 |  33 | 2020-10-24 |
+|  222 |  13 | 2019-10-24 |
+|  222 |  22 | 2020-10-24 |
+|  222 |  33 | 2020-10-24 |
+|  222 |  58 | 2018-10-24 |
+|  333 |  33 | 2019-06-23 |
+|  444 |  58 | 2021-01-04 |
+|  555 |  13 | 2017-11-22 |
++------+-----+------------+
+9 rows in set (0.00 sec)
+
+mysql> INSERT INTO VISITS VALUES(222,1,'2021-10-24');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM VISITS;
++------+-----+------------+
+| TPID | TID | VDATE      |
++------+-----+------------+
+|  111 |  22 | 2014-09-13 |
+|  221 |  33 | 2020-10-24 |
+|  222 |   1 | 2021-10-24 |
+|  222 |  13 | 2019-10-24 |
+|  222 |  22 | 2020-10-24 |
+|  222 |  33 | 2020-10-24 |
+|  222 |  58 | 2018-10-24 |
+|  333 |  33 | 2019-06-23 |
+|  444 |  58 | 2021-01-04 |
+|  555 |  13 | 2017-11-22 |
++------+-----+------------+
+10 rows in set (0.00 sec)
+
+
+
 
 
