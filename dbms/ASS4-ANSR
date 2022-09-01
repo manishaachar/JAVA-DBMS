@@ -276,6 +276,43 @@ mysql> SELECT * FROM TOURIST
 
 ---------------------------------------------------------------------------------------------
 
+4
 
+UPDATE VISITS
+   SET TID='13'
+   WHERE TPID='333';
+   
+   UPDATE VISITS
+   SET TID='13'
+   WHERE TPID='221';
+(FOR ALL)
+
+SELECT * FROM TOURIST WHERE TID IN(SELECT TID FROM VISITS,
+TOURIST_PLACE WHERE VISITS.TPID=TOURIST_PLACE.TPID
+GROUP BY TID HAVING COUNT(DISTINCT STATE)
+IN(SELECT COUNT(DISTINCT STATE)FROM TOURIST_PLACE));
+
+
+mysql> SELECT * FROM TOURIST WHERE TID IN(SELECT TID FROM VISITS,
+    -> TOURIST_PLACE WHERE VISITS.TPID=TOURIST_PLACE.TPID
+    -> GROUP BY TID HAVING COUNT(DISTINCT STATE)
+    -> IN(SELECT COUNT(DISTINCT STATE)FROM TOURIST_PLACE));
++-----+---------+------+-------+
+| TID | COUNTRY | AGE  | TNAME |
++-----+---------+------+-------+
+|  13 | MUNNAR  |   22 | PAYAL |
++-----+---------+------+-------+
+1 row in set (0.00 sec)
+
+
+
+
+-------------------------------------------------------------------------------------------------
+5 
+
+
+SELECT * FROM TOURIST_PLACE WHERE TPID IN(
+SELECT TPID FROM VISITS,TOURIST WHERE VISITS.TID=TOURIST.TID GROUP BY TPID
+HAVING COUNT(DISTINCT COUNTRY)=(SELECT COUNT(DISTINCT COUNTRY) FROM TOURIST));
 
 
