@@ -339,8 +339,30 @@ mysql> SELECT CSTATE,COUNT(COID)
 
 -------------------------------------------------------------------------------------------------------------------
 
+3.
 
+mysql> source abc.sql;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
 
+mysql> call abc('101','Manisha',20,'Puttur');
++--------------+
+| msg          |
++--------------+
+| row inserted |
++--------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call abc("102","kavana",21,"puttur");
++--------------+
+| msg          |
++--------------+
+| row inserted |
++--------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
 
 mysql> call abc(103,"Merolin",21,"puttur");
 +--------------+
@@ -362,7 +384,6 @@ mysql> call abc(104,"Vriddhi",17,"puttur");
 
 Query OK, 0 rows affected (0.00 sec)
 
-
 mysql> select * from VOTER;
 +-----+---------+------+-----------+------+------+
 | VID | VNAME   | AGE  | ADDR      | COID | CID  |
@@ -377,5 +398,3 @@ mysql> select * from VOTER;
 | V05 | JANSI   |   31 | PUNE      | CO02 | C02  |
 +-----+---------+------+-----------+------+------+
 8 rows in set (0.00 sec)
-
-
