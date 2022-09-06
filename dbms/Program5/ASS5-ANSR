@@ -1,0 +1,381 @@
+mysql> CREATE DATABASE VP21MC021_VOTE;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE VP21MC021_VOTE;
+Database changed
+--------------------------------------------------------------------------------------------------------
+1.
+
+mysql> CREATE TABLE CONST(COID CHAR(10) PRIMARY KEY,
+    -> CNAME VARCHAR(20),
+    -> CSTATE VARCHAR(20),
+    -> VOTES CHAR(10));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC CONST;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| COID   | char(10)    | NO   | PRI | NULL    |       |
+| CNAME  | varchar(20) | YES  |     | NULL    |       |
+| CSTATE | varchar(20) | YES  |     | NULL    |       |
+| VOTES  | char(10)    | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+INSERT INTO CONST VALUES('CO01','HASSAN','KARNATAKA','1400');
+INSERT INTO CONST VALUES('CO02','CHENNAI','TAMIL-NADU','1000');
+INSERT INTO CONST VALUES('CO03','DAKSHINA KANNADA','KARNATAKA','2000');
+INSERT INTO CONST VALUES('CO04','MUMBAI','MAHARASTRA','3000');
+INSERT INTO CONST VALUES('CO05','BUSAN','NEPAL','3000');
+
+INSERT INTO CONST VALUES('CO06','HUBALI','KARNATAKA','2000');
+
+INSERT INTO CONST VALUES('CO07','MADURAI','TAMIL-NADU','2000');
+INSERT INTO CONST VALUES('CO08','VIZAG','TAMIL-NADU','2000');
+INSERT INTO CONST VALUES('CO09','VISHAKAPATANA','TAMIL-NADU','2000');
+
+mysql> INSERT INTO CONST VALUES('CO01','HASSAN','KARNATAKA','1400');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO CONST VALUES('CO02','CHENNAI','TAMIL-NADU','1000');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO CONST VALUES('CO03','DAKSHINA KANNADA','KARNATAKA','2000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CONST VALUES('CO04','MUMBAI','MAHARASTRA','3000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CONST VALUES('CO05','BUSAN','NEPAL','3000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM CONST;
++------+------------------+------------+-------+
+| COID | CNAME            | CSTATE     | VOTES |
++------+------------------+------------+-------+
+| CO01 | HASSAN           | KARNATAKA  | 1400  |
+| CO02 | CHENNAI          | TAMIL-NADU | 1000  |
+| CO03 | DAKSHINA KANNADA | KARNATAKA  | 2000  |
+| CO04 | MUMBAI           | MAHARASTRA | 3000  |
+| CO05 | BUSAN            | NEPAL      | 3000  |
+| CO06 | HUBALI           | KARNATAKA  | 2000  |
+| CO07 | MADURAI          | TAMIL-NADU | 2000  |
+| CO08 | VIZAG            | TAMIL-NADU | 2000  |
+| CO09 | VISHAKAPATANA    | TAMIL-NADU | 2000  |
++------+------------------+------------+-------+
+9 rows in set (0.00 sec)
+
+
+--------------------------------------------------------------------------------------------
+mysql> CREATE TABLE PARTY(
+    -> PID CHAR(10) PRIMARY KEY,
+    -> PNAME VARCHAR(20),
+    -> SYMBOL VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC PARTY;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| PID    | char(10)    | NO   | PRI | NULL    |       |
+| PNAME  | varchar(20) | YES  |     | NULL    |       |
+| SYMBOL | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+INSERT INTO PARTY VALUES('P01','BJP','LOTUS');
+INSERT INTO PARTY VALUES('P02','JDS','JANATHA DAL');
+INSERT INTO PARTY VALUES('P03','CONGRESS','HAND');
+INSERT INTO PARTY VALUES('P04','AAM ADHMI','BROOM');
+INSERT INTO PARTY VALUES('P05','OTHERS','CLOCK');
+
+mysql> INSERT INTO PARTY VALUES('P01','BJP','LOTUS');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO PARTY VALUES('P02','JDS','JANATHA DAL');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO PARTY VALUES('P03','CONGRESS','HAND');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO PARTY VALUES('P03','AAM ADHMI','BROOM');
+ERROR 1062 (23000): Duplicate entry 'P03' for key 'PARTY.PRIMARY'
+mysql> INSERT INTO PARTY VALUES('P04','AAM ADHMI','BROOM');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO PARTY VALUES('P04','OTHERS','CLOCK');
+ERROR 1062 (23000): Duplicate entry 'P04' for key 'PARTY.PRIMARY'
+mysql> INSERT INTO PARTY VALUES('P05','OTHERS','CLOCK');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM PARTY;
++-----+-----------+-------------+
+| PID | PNAME     | SYMBOL      |
++-----+-----------+-------------+
+| P01 | BJP       | LOTUS       |
+| P02 | JDS       | JANATHA DAL |
+| P03 | CONGRESS  | HAND        |
+| P04 | AAM ADHMI | BROOM       |
+| P05 | OTHERS    | CLOCK       |
++-----+-----------+-------------+
+5 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------
+mysql> CREATE TABLE CANDIDATE(
+    -> CID CHAR(10) PRIMARY KEY,
+    -> NAME VARCHAR(20),
+    -> PNO CHAR(10),
+    -> AGE INT(10),
+    -> STATE VARCHAR(20),
+    -> PID CHAR(10),
+    -> FOREIGN KEY(PID)REFERENCES PARTY(PID));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> DESC CANDIDATE;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| CID   | char(10)    | NO   | PRI | NULL    |       |
+| NAME  | varchar(20) | YES  |     | NULL    |       |
+| PNO   | char(10)    | YES  |     | NULL    |       |
+| AGE   | int         | YES  |     | NULL    |       |
+| STATE | varchar(20) | YES  |     | NULL    |       |
+| PID   | char(10)    | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+INSERT INTO CANDIDATE VALUES('C01','MANISHA','8296289864',22,'KARNATAKA','P01');
+INSERT INTO CANDIDATE VALUES('C02','MEROLIN','8296287821',25,'MAHARASTRA','P02');
+INSERT INTO CANDIDATE VALUES('C03','AKASH','9846087821',40,'NEPAL','P03');
+INSERT INTO CANDIDATE VALUES('C04','VRIDDHI','9479861430',35,'TAMIL NADU','P04');
+INSERT INTO CANDIDATE VALUES('C05','KARTHIK','8846087821',30,'NEPAL','P04');
+
+
+INSERT INTO CANDIDATE VALUES('C07','ARUN','8296289004',26,'KARNATAKA','P01');
+
+INSERT INTO CANDIDATE VALUES('C01','MANISHA','8296289864',22,'NEPAL','P01');
+
+
+mysql> INSERT INTO CANDIDATE VALUES('C01','MANISHA','8296289864',22,'KARNATAKA','P01');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO CANDIDATE VALUES('C02','MEROLIN','8296287821',25,'MAHARASTRA','P02');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO CANDIDATE VALUES('C03','AKASH','9846087821',40,'NEPAL','P03');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CANDIDATE VALUES('C04','VRIDDHI','9479861430',35,'TAMIL NADU','P04');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO CANDIDATE VALUES('C05','KARTHIK','8846087821',30,'NEPAL','P04');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM CANDIDATE;
++-----+---------+------------+------+------------+------+
+| CID | NAME    | PNO        | AGE  | STATE      | PID  |
++-----+---------+------------+------+------------+------+
+| C01 | MANISHA | 8296289864 |   22 | KARNATAKA  | P01  |
+| C02 | MEROLIN | 8296287821 |   25 | MAHARASTRA | P02  |
+| C03 | AKASH   | 9846087821 |   40 | NEPAL      | P03  |
+| C04 | VRIDDHI | 9479861430 |   35 | TAMIL NADU | P04  |
+| C05 | KARTHIK | 8846087821 |   30 | NEPAL      | P04  |
+| C07 | ARUN    | 8296289004 |   26 | KARNATAKA  | P01  |
++-----+---------+------------+------+------------+------+
+6 rows in set (0.00 sec)
+
+
+-------------------------------------------------------------------------------------------------------
+
+mysql> CREATE TABLE VOTER(
+    -> VID CHAR(10) PRIMARY KEY,
+    -> VNAME VARCHAR(20),
+    -> AGE INT(10),
+    -> ADDR VARCHAR(20),
+    -> COID CHAR(10),
+    -> CID CHAR(10),
+    -> FOREIGN KEY(CID)REFERENCES CANDIDATE(CID),
+    -> FOREIGN KEY(COID)REFERENCES CONST(COID));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> DESC VOTER;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| VID   | char(10)    | NO   | PRI | NULL    |       |
+| VNAME | varchar(20) | YES  |     | NULL    |       |
+| AGE   | int         | YES  |     | NULL    |       |
+| ADDR  | varchar(20) | YES  |     | NULL    |       |
+| COID  | char(10)    | YES  | MUL | NULL    |       |
+| CID   | char(10)    | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+INSERT INTO VOTER VALUES('V01','DHANYA',22,'KAVU','CO01','C01');
+INSERT INTO VOTER VALUES('V02','SHRUNGA',35,'VITLA','CO04','C04');
+INSERT INTO VOTER VALUES('V03','GEETHA',55,'ERNAKULAM','CO03','C03');
+INSERT INTO VOTER VALUES('V04','JHANU',41,'PUTTUR','CO02','C02');
+INSERT INTO VOTER VALUES('V05','JANSI',31,'PUNE','CO02','C02');
+
+
+mysql> INSERT INTO VOTER VALUES('V01','DHANYA',22,'KAVU','CO01','C01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO VOTER VALUES('V02','SHRUNGA',35,'VITLA','CO04','C04');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO VOTER VALUES('V03','GEETHA',55,'ERNAKULAM','CO03','C03');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO VOTER VALUES('V04','JHANU',41,'PUTTUR','CO02','C02');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO VOTER VALUES('V05','JANSI',31,'PUNE','CO02','C02');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM VOTER;
++-----+---------+------+-----------+------+------+
+| VID | VNAME   | AGE  | ADDR      | COID | CID  |
++-----+---------+------+-----------+------+------+
+| V01 | DHANYA  |   22 | KAVU      | CO01 | C01  |
+| V02 | SHRUNGA |   35 | VITLA     | CO04 | C04  |
+| V03 | GEETHA  |   55 | ERNAKULAM | CO03 | C03  |
+| V04 | JHANU   |   41 | PUTTUR    | CO02 | C02  |
+| V05 | JANSI   |   31 | PUNE      | CO02 | C02  |
++-----+---------+------+-----------+------+------+
+5 rows in set (0.00 sec)
+
+
+-----------------------------------------------------------------------------------------------------------------
+mysql> CREATE TABLE CONTEST(CID CHAR(10),
+    -> COID CHAR(10),
+    -> PRIMARY KEY(CID,COID),
+    -> FOREIGN KEY(CID)REFERENCES CANDIDATE(CID),
+    -> FOREIGN KEY(COID)REFERENCES CONST(COID));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC CONTEST;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| CID   | char(10) | NO   | PRI | NULL    |       |
+| COID  | char(10) | NO   | PRI | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+INSERT INTO CONTEST VALUES('C01','CO01');
+INSERT INTO CONTEST VALUES('C02','CO02');
+INSERT INTO CONTEST VALUES('C03','CO03');
+INSERT INTO CONTEST VALUES('C04','CO04');
+INSERT INTO CONTEST VALUES('C05','CO05');
+
+INSERT INTO CONTEST VALUES('C01','CO03');
+INSERT INTO CONTEST VALUES('C01','CO02');
+
+
+mysql> INSERT INTO CONTEST VALUES('C01','CO01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CONTEST VALUES('C02','CO02');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CONTEST VALUES('C03','CO03');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CONTEST VALUES('C04','CO04');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CONTEST VALUES('C05','CO05');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM CONTEST;
++-----+------+
+| CID | COID |
++-----+------+
+| C01 | CO01 |
+| C01 | CO02 |
+| C02 | CO02 |
+| C01 | CO03 |
+| C03 | CO03 |
+| C04 | CO04 |
+| C05 | CO05 |
++-----+------+
+7 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------------
+
+QUERY
+
+1.
+
+mysql> SELECT * FROM CANDIDATE 
+    -> WHERE CID IN(SELECT CID
+    -> FROM CONTEST
+    -> JOIN CONST ON CONTEST.COID=CONST.COID
+    -> GROUP BY CID 
+    -> HAVING COUNT(DISTINCT(CSTATE))>1);
++-----+---------+------------+------+-----------+------+
+| CID | NAME    | PNO        | AGE  | STATE     | PID  |
++-----+---------+------------+------+-----------+------+
+| C01 | MANISHA | 8296289864 |   22 | KARNATAKA | P01  |
++-----+---------+------------+------+-----------+------+
+1 row in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------
+2.
+
+mysql> SELECT CSTATE,COUNT(COID)
+    -> FROM CONST 
+    -> GROUP BY CSTATE 
+    -> ORDER BY COUNT(COID)DESC LIMIT 1;
++------------+-------------+
+| CSTATE     | COUNT(COID) |
++------------+-------------+
+| TAMIL-NADU |           4 |
++------------+-------------+
+1 row in set (0.00 sec)
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+mysql> call abc(103,"Merolin",21,"puttur");
++--------------+
+| msg          |
++--------------+
+| row inserted |
++--------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call abc(104,"Vriddhi",17,"puttur");
++--------------------+
+| msg                |
++--------------------+
+| voter not eligible |
++--------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> select * from VOTER;
++-----+---------+------+-----------+------+------+
+| VID | VNAME   | AGE  | ADDR      | COID | CID  |
++-----+---------+------+-----------+------+------+
+| 101 | Manisha |   20 | Puttur    | NULL | NULL |
+| 102 | kavana  |   21 | puttur    | NULL | NULL |
+| 103 | Merolin |   21 | puttur    | NULL | NULL |
+| V01 | DHANYA  |   22 | KAVU      | CO01 | C01  |
+| V02 | SHRUNGA |   35 | VITLA     | CO04 | C04  |
+| V03 | GEETHA  |   55 | ERNAKULAM | CO03 | C03  |
+| V04 | JHANU   |   41 | PUTTUR    | CO02 | C02  |
+| V05 | JANSI   |   31 | PUNE      | CO02 | C02  |
++-----+---------+------+-----------+------+------+
+8 rows in set (0.00 sec)
+
+
