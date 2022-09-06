@@ -1,0 +1,418 @@
+create database VP21MC021_TOURIST;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE VP21MC021_TOURIST;
+Database changed
+
+
+mysql> CREATE TABLE TOURIST_PLACE(
+    -> TPID INT(5) PRIMARY KEY,
+    -> HISTORY VARCHAR(20),
+    -> KILOMETER INT(3),
+    -> STATE VARCHAR(20),
+    -> TPNAME VARCHAR(20));
+Query OK, 0 rows affected, 2 warnings (0.01 sec)
+
+mysql> DESC TOURIST_PLACE;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TPID      | int         | NO   | PRI | NULL    |       |
+| HISTORY   | varchar(20) | YES  |     | NULL    |       |
+| KILOMETER | int         | YES  |     | NULL    |       |
+| STATE     | varchar(20) | YES  |     | NULL    |       |
+| TPNAME    | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE TOURIST(
+    -> TID INT(5) PRIMARY KEY,
+    -> COUNTRY VARCHAR(20),
+    -> AGE INT(5),
+    -> TNAME VARCHAR(20));
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> DESC TOURIST;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| TID     | int         | NO   | PRI | NULL    |       |
+| COUNTRY | varchar(20) | YES  |     | NULL    |       |
+| AGE     | int         | YES  |     | NULL    |       |
+| TNAME   | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE VISITS(
+    -> TPID INT(5) REFERENCES TOURIST_PLACE(TPID),
+    -> TID INT(5) REFERENCES TOURIST(TID),
+    -> VDATE DATE,
+    -> PRIMARY KEY(TPID,TID));
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> DESC VISITS;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| TPID  | int  | NO   | PRI | NULL    |       |
+| TID   | int  | NO   | PRI | NULL    |       |
+| VDATE | date | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> CREATE TABLE EMAIL_ID(
+    -> TID INT(5) REFERENCES TOURIST(TID),
+    -> EMAIL VARCHAR(20),
+    -> PRIMARY KEY(TID,EMAIL));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> DESC EMAIL_ID;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| TID   | int         | NO   | PRI | NULL    |       |
+| EMAIL | varchar(20) | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+============================================================================================================
+
+INSERTION OF TOURIST_PLACE
+
+mysql> INSERT INTO TOURIST_PLACE VALUES(111,'PEARL',160,'KARNATAKA','PUTTUR');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO TOURIST_PLACE VALUES(222,'BEAUTY',200,'KARNATAKA','MYSORE');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TOURIST_PLACE VALUES(333,'Amer Fort',800,'NORTH-INDIA','JAIPUR');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TOURIST_PLACE VALUES(444,'The Red Fort',1200,'DELHI','New Delhi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO TOURIST_PLACE VALUES(555,'NATURE',160,'Munnar','KERALA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM TOURIST_PLACE;
++------+--------------+-----------+-------------+-----------+
+| TPID | HISTORY      | KILOMETER | STATE       | TPNAME    |
++------+--------------+-----------+-------------+-----------+
+|  111 | PEARL        |       160 | KARNATAKA   | PUTTUR    |
+|  222 | BEAUTY       |       200 | KARNATAKA   | MYSORE    |
+|  333 | Amer Fort    |       800 | NORTH-INDIA | JAIPUR    |
+|  444 | The Red Fort |      1200 | DELHI       | New Delhi |
+|  555 | NATURE       |       160 | Munnar      | KERALA    |
++------+--------------+-----------+-------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> 
+
+===================================================================================================================
+
+TOURIST
+
+
+mysql> INSERT INTO TOURIST VALUES(22,'INDIA',22,'SAGAR');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TOURIST VALUES(33,'MANGALORE',25,'ANANYA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO TOURIST VALUES(58,'MAHARASTRA',35,'AHAN');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO TOURIST VALUES(01,'INDIA',45,'HIMANI');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO TOURIST VALUES(13,'MUNNAR',22,'PAYAL');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM TOURIST;
++-----+------------+------+--------+
+| TID | COUNTRY    | AGE  | TNAME  |
++-----+------------+------+--------+
+|   1 | INDIA      |   45 | HIMANI |
+|  13 | MUNNAR     |   22 | PAYAL  |
+|  22 | INDIA      |   22 | SAGAR  |
+|  33 | MANGALORE  |   25 | ANANYA |
+|  58 | MAHARASTRA |   35 | AHAN   |
++-----+------------+------+--------+
+5 rows in set (0.00 sec)
+
+mysql> 
+===============================================================================================
+VISITS
+
+mysql> INSERT INTO VISITS VALUES(111,22,'2014-09-13');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO VISITS VALUES(222,22,'2020-10-24');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO VISITS VALUES(333,33,'2019-06-23');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO VISITS VALUES(444,58,'2021-01-04');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO VISITS VALUES(555,13,'2017-11-22');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO VISITS VALUES(222,33,'2020-10-24');
+Query OK, 1 row affected (0.01 sec)
+
+
+INSERT INTO VISITS VALUES(222,33,'2020-10-24')
+
+mysql> SELECT * FROM VISITS;
++------+-----+------------+
+| TPID | TID | VDATE      |
++------+-----+------------+
+|  111 |  22 | 2014-09-13 |
+|  221 |  33 | 2020-10-24 |
+|  222 |  22 | 2020-10-24 |
+|  222 |  33 | 2020-10-24 |
+|  333 |  33 | 2019-06-23 |
+|  444 |  58 | 2021-01-04 |
+|  555 |  13 | 2017-11-22 |
++------+-----+------------+
+7 rows in set (0.00 sec)
+
+
+
+===================================================================================
+EMAIL_ID
+
+mysql> INSERT INTO EMAIL_ID VALUES(22,'SAGAR@GMAIL.COM');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EMAIL_ID VALUES(33,'ANANYA@GMAIL.COM');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMAIL_ID VALUES(58,'AHAN@GMAIL.COM');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EMAIL_ID VALUES(01,'HIMANI@GMAIL.COM');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMAIL_ID VALUES(13,'PAYAL@GMAIL.COM');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM EMAIL_ID;
++-----+------------------+
+| TID | EMAIL            |
++-----+------------------+
+|   1 | HIMANI@GMAIL.COM |
+|  13 | PAYAL@GMAIL.COM  |
+|  22 | SAGAR@GMAIL.COM  |
+|  33 | ANANYA@GMAIL.COM |
+|  58 | AHAN@GMAIL.COM   |
++-----+------------------+
+5 rows in set (0.00 sec)
+
+==================================================================================
+
+
+====================================================================================
+QUERIES:
+
+1.
+
+SELECT STATE,COUNT(TPID)
+FROM TOURIST_PLACE
+GROUP BY STATE
+ORDER BY COUNT(TPID)DESC LIMIT 1;
+
+
+
+mysql> SELECT STATE,COUNT(TPID)
+    -> FROM TOURIST_PLACE
+    -> GROUP BY STATE
+    -> ORDER BY COUNT(TPID)DESC LIMIT 1;
++-----------+-------------+
+| STATE     | COUNT(TPID) |
++-----------+-------------+
+| KARNATAKA |           2 |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+
+----------------------------------------------------------------------------------
+
+2.
+
+SELECT TP.TPID, TP.TPNAME, STATE, COUNT(V.TID)
+FROM TOURIST_PLACE TP, VISITS V
+WHERE V.TPID=TP.TPID GROUP BY V.TPID ORDER BY COUNT(V.TPID)DESC LIMIT 1;
+
+
+mysql> SELECT TP.TPID, TP.TPNAME, STATE, COUNT(V.TID)
+    -> FROM TOURIST_PLACE TP, VISITS V
+    -> WHERE V.TPID=TP.TPID GROUP BY V.TPID ORDER BY COUNT(V.TPID)DESC LIMIT 1;
++------+--------+-----------+--------------+
+| TPID | TPNAME | STATE     | COUNT(V.TID) |
++------+--------+-----------+--------------+
+|  111 | PUTTUR | KARNATAKA |            1 |
++------+--------+-----------+--------------+
+1 row in set (0.00 sec)
+
+---------------------------------------------------------------------------------------
+
+
+3.
+
+SELECT * FROM TOURIST 
+WHERE TID IN(SELECT TID 
+FROM VISITS,TOURIST_PLACE
+WHERE VISITS.TPID=TOURIST_PLACE.TPID AND STATE="KARNATAKA");
+
+mysql> SELECT * FROM TOURIST 
+    -> WHERE TID IN(SELECT TID 
+    -> FROM VISITS,TOURIST_PLACE
+    -> WHERE VISITS.TPID=TOURIST_PLACE.TPID AND STATE="KARNATAKA");
++-----+-----------+------+--------+
+| TID | COUNTRY   | AGE  | TNAME  |
++-----+-----------+------+--------+
+|  22 | INDIA     |   22 | SAGAR  |
+|  33 | MANGALORE |   25 | ANANYA |
++-----+-----------+------+--------+
+2 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------
+
+
+4
+
+UPDATE VISITS
+   SET TID='13'
+   WHERE TPID='333';
+   
+   UPDATE VISITS
+   SET TID='13'
+   WHERE TPID='221';
+(FOR ALL)
+
+SELECT * FROM TOURIST WHERE TID IN(SELECT TID FROM VISITS,
+TOURIST_PLACE WHERE VISITS.TPID=TOURIST_PLACE.TPID
+GROUP BY TID HAVING COUNT(DISTINCT STATE)
+IN(SELECT COUNT(DISTINCT STATE)FROM TOURIST_PLACE));
+
+
+mysql> SELECT * FROM TOURIST WHERE TID IN(SELECT TID FROM VISITS,
+    -> TOURIST_PLACE WHERE VISITS.TPID=TOURIST_PLACE.TPID
+    -> GROUP BY TID HAVING COUNT(DISTINCT STATE)
+    -> IN(SELECT COUNT(DISTINCT STATE)FROM TOURIST_PLACE));
++-----+---------+------+-------+
+| TID | COUNTRY | AGE  | TNAME |
++-----+---------+------+-------+
+|  13 | MUNNAR  |   22 | PAYAL |
++-----+---------+------+-------+
+1 row in set (0.00 sec)
+
+
+
+
+-------------------------------------------------------------------------------------------------
+5 
+
+UPDATE VISITS
+SET TID='22'
+   WHERE TPID='111';
+
+
+SELECT * FROM TOURIST_PLACE WHERE TPID IN(
+SELECT TPID FROM VISITS,TOURIST WHERE VISITS.TID=TOURIST.TID GROUP BY TPID
+HAVING COUNT(DISTINCT COUNTRY)=(SELECT COUNT(DISTINCT COUNTRY) FROM TOURIST));
+
+
+mysql> SELECT * FROM TOURIST_PLACE WHERE TPID IN(
+    -> SELECT TPID FROM VISITS,TOURIST WHERE VISITS.TID=TOURIST.TID GROUP BY TPID
+    -> HAVING COUNT(DISTINCT COUNTRY)=(SELECT COUNT(DISTINCT COUNTRY) FROM TOURIST));
++------+---------+-----------+-----------+--------+
+| TPID | HISTORY | KILOMETER | STATE     | TPNAME |
++------+---------+-----------+-----------+--------+
+|  222 | BEAUTY  |       200 | KARNATAKA | MYSORE |
++------+---------+-----------+-----------+--------+
+1 row in set (0.00 sec)
+
+
+
+----------------------------------------------------------------------------------------------------
+
+UPDATE VISITS
+   SET TID='22'
+   WHERE TPID='111';
+
+
+mysql> SELECT * FROM VISITS;
++------+-----+------------+
+| TPID | TID | VDATE      |
++------+-----+------------+
+|  111 |  22 | 2014-09-13 |
+|  221 |  33 | 2020-10-24 |
+|  222 |  22 | 2020-10-24 |
+|  222 |  33 | 2020-10-24 |
+|  333 |  33 | 2019-06-23 |
+|  444 |  58 | 2021-01-04 |
+|  555 |  13 | 2017-11-22 |
++------+-----+------------+
+7 rows in set (0.00 sec)
+
+
+UPDATE VISITS
+SET TPID='555'
+WHERE TID='22';
+
+
+INSERT INTO VISITS VALUES(222,1,'2021-10-24');
+INSERT INTO VISITS VALUES(222,58,'2018-10-24');
+INSERT INTO VISITS VALUES(222,13,'2019-10-24');
+
+---------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+mysql> INSERT INTO VISITS VALUES(222,58,'2018-10-24');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO VISITS VALUES(222,13,'2019-10-24');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM VISITS;
++------+-----+------------+
+| TPID | TID | VDATE      |
++------+-----+------------+
+|  111 |  22 | 2014-09-13 |
+|  221 |  33 | 2020-10-24 |
+|  222 |  13 | 2019-10-24 |
+|  222 |  22 | 2020-10-24 |
+|  222 |  33 | 2020-10-24 |
+|  222 |  58 | 2018-10-24 |
+|  333 |  33 | 2019-06-23 |
+|  444 |  58 | 2021-01-04 |
+|  555 |  13 | 2017-11-22 |
++------+-----+------------+
+9 rows in set (0.00 sec)
+
+mysql> INSERT INTO VISITS VALUES(222,1,'2021-10-24');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM VISITS;
++------+-----+------------+
+| TPID | TID | VDATE      |
++------+-----+------------+
+|  111 |  22 | 2014-09-13 |
+|  221 |  33 | 2020-10-24 |
+|  222 |   1 | 2021-10-24 |
+|  222 |  13 | 2019-10-24 |
+|  222 |  22 | 2020-10-24 |
+|  222 |  33 | 2020-10-24 |
+|  222 |  58 | 2018-10-24 |
+|  333 |  33 | 2019-06-23 |
+|  444 |  58 | 2021-01-04 |
+|  555 |  13 | 2017-11-22 |
++------+-----+------------+
+10 rows in set (0.00 sec)
+
+
+
