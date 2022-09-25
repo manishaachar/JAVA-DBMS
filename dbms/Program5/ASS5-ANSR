@@ -339,7 +339,20 @@ mysql> SELECT CSTATE,COUNT(COID)
 
 -------------------------------------------------------------------------------------------------------------------
 
+DELIMITER //
+create procedure abc(IN VID CHAR(10),IN VNAME VARCHAR(20),IN AGE INT(10),IN CITY VARCHAR(20))
+begin
+declare msg varchar(20);
+if age>=18 then
+insert into VOTER (VID,VNAME,AGE,ADDR)values(VID,VNAME,AGE,CITY);
+set msg="row inserted";
+else
+set msg="voter not eligible";
+end if;
+select msg;
+end //
 
+DELIMITER ;
 
 
 mysql> call abc(103,"Merolin",21,"puttur");
@@ -377,6 +390,26 @@ mysql> select * from VOTER;
 | V05 | JANSI   |   31 | PUNE      | CO02 | C02  |
 +-----+---------+------+-----------+------+------+
 8 rows in set (0.00 sec)
+
+------------------------------------------------------------------------------------------------
+4) mysql> DELIMITER $$
+mysql> create procedure new1(csname varchar(20))
+    -> begin
+    -> select no_of_votes from constituency where csname=cname;
+    -> end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call new1('puttur');
+    -> $$
++-------------+
+| no_of_votes |
++-------------+
+|        5000 |
++-------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
 
 
 ------------------------------------------------------------------------------------------------
@@ -422,23 +455,7 @@ mysql>    select *from constituency;
 5 rows in set (0.00 sec)
 -----------------------------------------------------------------------------------------
 
-4) mysql> DELIMITER $$
-mysql> create procedure new1(csname varchar(20))
-    -> begin
-    -> select no_of_votes from constituency where csname=cname;
-    -> end$$
-Query OK, 0 rows affected (0.01 sec)
 
-mysql> call new1('puttur');
-    -> $$
-+-------------+
-| no_of_votes |
-+-------------+
-|        5000 |
-+-------------+
-1 row in set (0.00 sec)
-
-Query OK, 0 rows affected (0.00 sec)
 
 
 
